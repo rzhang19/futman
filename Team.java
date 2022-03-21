@@ -11,12 +11,19 @@ public class Team {
    private int m_seasonDraws = 0;
    private int m_seasonLosses = 0;
    
+   // Attribute values
+   private int m_attOverall = 0;
+   private int m_midOverall = 0;
+   private int m_defOverall = 0;
+   private int m_gkOverall = 0;
+   private int m_overall = 0;
+   
    public Team() {
       this ("", "");
    }
    
    public Team(String longName, String shortName) {
-      m_ID = ID_COUNTER;
+      m_id = ID_COUNTER;
       ID_COUNTER++;
       
       m_longName = longName;
@@ -24,7 +31,7 @@ public class Team {
    }
    
    public int getID() {
-      return m_ID;
+      return m_id;
    }
    
    public String getLongName() {
@@ -45,5 +52,33 @@ public class Team {
    
    public int getSeasonLosses() {
       return m_seasonLosses;
+   }
+   
+   public int getAttOverall() {
+      return m_attOverall;
+   }
+   
+   public int getMidOverall() {
+      return m_midOverall;
+   }
+   
+   public int getDefOverall() {
+      return m_defOverall;
+   }
+   
+   public int getGKOverall() {
+      return m_gkOverall;
+   }
+   
+   public int getOverall() {
+      if (calculateOverall())
+         return m_overall;
+      System.err.println("Error calculating overall");
+      return -1;
+   }
+   
+   private boolean calculateOverall() {
+      // to be done in FUTMAN-22
+      return true;
    }
 }
