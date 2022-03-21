@@ -16,4 +16,28 @@ public class Team {
       m_longName = longName;
       m_shortName = shortName;
    }
+   
+   public int getID() {
+      return m_ID;
+   }
+   
+   public String getLongName() {
+      return m_longName;
+   }
+   
+   public String getShortName() {
+      return m_shortName;
+   }
+   
+   public int getSeasonWins() {
+      return m_seasonWins;
+   }
+   
+   public int getSeasonDraws() {
+      return m_seasonDraws;
+   }
+   
+   public int getSeasonLosses() {
+      return m_seasonLosses;
+   }
 }
