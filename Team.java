@@ -2,7 +2,7 @@ public class Team {
    private static int ID_COUNTER = 1;
    
    // Identifiable values
-   private int m_ID;
+   private int m_id;
    private String m_longName;
    private String m_shortName;
    
