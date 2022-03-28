@@ -34,6 +34,10 @@ public class Team {
       return m_id;
    }
    
+   public boolean equals(Team other) {
+      return m_id == other.getID();
+   }
+   
    public String getLongName() {
       return m_longName;
    }
