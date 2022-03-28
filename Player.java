@@ -21,6 +21,12 @@ public class Player {
    
    private Position m_position;
    
+   // Seasonal statistics
+   private int m_seasonGoals = 0;
+   private int m_seasonAssists = 0;
+   private int m_seasonSaves = 0;
+   private int m_seasonTackles = 0;
+   
    public Player() {
       this("","","",new Date(1900,1,1));
    }
@@ -60,5 +66,21 @@ public class Player {
    
    public Position getPosition() {
       return m_position;
+   }
+   
+   public int getSeasonGoals() {
+      return m_seasonGoals;
+   }
+   
+   public int getSeasonAssists() {
+      return m_seasonAssists;
+   }
+   
+   public int getSeasonSaves() {
+      return m_seasonSaves;
+   }
+   
+   public int getSeasonTackles() {
+      return m_seasonTackles;
    }
 }
