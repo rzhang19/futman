@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.time.*;
 
 public class Player {
    private static int ID_COUNTER = 1;
@@ -17,7 +17,7 @@ public class Player {
    private String m_firstName;
    private String m_lastName;
    private String m_nickName;
-   private Date m_dob;
+   private LocalDate m_dob;
    
    private Position m_position;
    
@@ -28,14 +28,14 @@ public class Player {
    private int m_seasonTackles = 0;
    
    public Player() {
-      this("","","",new Date(1900,1,1));
+      this("","","",LocalDate.of(1900,1,1));
    }
    
-   public Player(String firstName, String lastName, String nickName, Date dob) {
+   public Player(String firstName, String lastName, String nickName, LocalDate dob) {
       this(firstName, lastName, nickName, dob, Position.NONE);
    }
    
-   public Player(String firstName, String lastName, String nickName, Date dob, Position position) {
+   public Player(String firstName, String lastName, String nickName, LocalDate dob, Position position) {
       m_id = ID_COUNTER;
       ID_COUNTER++;
       
@@ -60,7 +60,7 @@ public class Player {
       return m_nickName;
    }
    
-   public Date getDOB() {
+   public LocalDate getDOB() {
       return m_dob;
    }
    
