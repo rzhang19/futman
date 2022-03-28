@@ -81,4 +81,37 @@ public class Team {
       // to be done in FUTMAN-22
       return true;
    }
+   
+   public boolean processMatch(Match match) {
+      int score1 = match.getScore1();
+      int score2 = match.getScore2();
+      if (match.getTeam1().equals(this)) {
+         if (score1 > score2)
+            m_seasonWins++;
+         else if (score1 == score2)
+            m_seasonDraws++;
+         else
+            m_seasonLosses++;
+         
+         // add score implementation here
+      }
+      
+      else {
+         if (score2 > score1)
+            m_seasonWins++;
+         else if (score2 == score1)
+            m_seasonDraws++;
+         else
+            m_seasonLosses++;
+         
+         // add score implementation here
+      }
+      
+      return true;
+   }
+   
+   public boolean unprocessMatch(Match match) {
+      // to be implemented
+      return true;
+   }
 }
