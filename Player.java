@@ -48,6 +48,14 @@ public class Player {
       m_position = position;
    }
    
+   public int getID() {
+      return m_id;
+   }
+   
+   public boolean equals(Player other) {
+      return m_id == other.getID();
+   }
+   
    public String getFirstName() {
       return m_firstName;
    }

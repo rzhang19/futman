@@ -27,6 +27,14 @@ public class Match {
       m_team2 = team2;
    }
    
+   public int getID() {
+      return m_id;
+   }
+   
+   public boolean equals(Match other) {
+      return m_id == other.getID();
+   }
+   
    public Team getTeam1() {
       return m_team1;
    }
