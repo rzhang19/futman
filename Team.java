@@ -1,5 +1,6 @@
 public class Team {
    private static int ID_COUNTER = 1;
+   private static final int MAX_PLAYERS = 50;
    
    // Identifiable values
    private int m_id;
@@ -17,6 +18,10 @@ public class Team {
    private int m_defOverall = 0;
    private int m_gkOverall = 0;
    private int m_overall = 0;
+   
+   // Players
+   private Player[] m_players = new Player[MAX_PLAYERS];
+   private int m_playerCount = 0;
    
    public Team() {
       this ("", "");
@@ -116,6 +121,80 @@ public class Team {
    
    public boolean unprocessMatch(Match match) {
       // to be implemented
+      return true;
+   }
+   
+   public boolean addPlayers(Player[] players) {
+      int addable = players.length;
+      
+      for (int x = 0; x < players.length; x++) {
+         if (findPlayer(players[x])) {
+            addable--;
+         }
+      }
+      
+      if (m_playerCount + addable > MAX_PLAYERS) {
+         return false;
+      }
+      
+      for (int x = 0; x < players.length; x++) {
+         if (!findPlayer(players[x])) {
+            players[m_playerCount] = players[x];
+            m_playerCount++;
+         }
+      }
+      
+      return true;
+   }
+   
+   public int getPlayerCount() {
+      return m_playerCount;
+   }
+   
+   public Player[] getPlayers() {
+      return m_players;
+   }
+   
+   public boolean addPlayer(Player player) {
+      if (m_playerCount < MAX_PLAYERS) {
+         m_players[m_playerCount] = player;
+         m_playerCount++;
+         
+         return true;
+      }
+      
+      return false;
+   }
+   
+   public boolean findPlayer(Player player) {
+      for (int x = 0; x < m_players.length; x++) {
+         if (m_players[x].equals(player)) {
+            return true;
+         }
+      }
+      
+      return false;
+   }
+   
+   public boolean removePlayer(Player player) {
+      if (!findPlayer(player))
+         return false;
+      
+      int index = 0;
+      boolean found = false;
+      
+      while (index < m_playerCount && !found) {
+         if (m_players[index].equals(player)) {
+            found = true;
+         }
+         
+         else
+            index++;
+      }
+      
+      m_players[index] = m_players[m_playerCount - 1];
+      m_playerCount--;
+      
       return true;
    }
 }
