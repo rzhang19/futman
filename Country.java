@@ -19,6 +19,14 @@ public class Country {
       return m_id;
    }
    
+   public boolean equals(Country other) {
+      return m_id == other.getID();
+   }
+   
+   public String toString() {
+      return m_name + " (" + m_code + ")";
+   }
+   
    public String getName() {
       return m_name;
    }

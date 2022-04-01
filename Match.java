@@ -35,6 +35,13 @@ public class Match {
       return m_id == other.getID();
    }
    
+   public String toString() {
+      if (m_finished)
+         return m_team1.getName() + ": " + m_score1 + "\n" + m_team2.getName() + ": " + m_score2;
+      else
+         return m_team1.getName() + " vs " + m_team2.getName();
+   }
+   
    public Team getTeam1() {
       return m_team1;
    }

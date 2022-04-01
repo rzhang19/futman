@@ -6,6 +6,7 @@ public class Team {
    private int m_id;
    private String m_longName;
    private String m_shortName;
+   private Country m_country;
    
    // Seasonal values
    private int m_seasonWins = 0;
@@ -23,16 +24,14 @@ public class Team {
    private Player[] m_players = new Player[MAX_PLAYERS];
    private int m_playerCount = 0;
    
-   public Team() {
-      this ("", "");
-   }
-   
-   public Team(String longName, String shortName) {
+   public Team(String longName, String shortName, Country country) {
       m_id = ID_COUNTER;
       ID_COUNTER++;
       
       m_longName = longName;
       m_shortName = shortName;
+      
+      m_country = country;
    }
    
    public int getID() {
@@ -43,7 +42,11 @@ public class Team {
       return m_id == other.getID();
    }
    
-   public String getLongName() {
+   public String toString() {
+      return m_longName + " (" + m_country.getCode() + ")";
+   }
+   
+   public String getName() {
       return m_longName;
    }
    

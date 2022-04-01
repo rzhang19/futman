@@ -41,7 +41,9 @@ public class Player {
       
       m_firstName = firstName;
       m_lastName = lastName;
-      m_nickName = nickName;
+      
+      if (m_nickName != null && m_nickName.length() > 0)
+         m_nickName = nickName;
       
       m_dob = dob;
       
@@ -56,6 +58,10 @@ public class Player {
       return m_id == other.getID();
    }
    
+   public String toString() {
+      return getName() + " (" + m_position + ")";
+   }
+   
    public String getFirstName() {
       return m_firstName;
    }
@@ -66,6 +72,13 @@ public class Player {
    
    public String getNickName() {
       return m_nickName;
+   }
+   
+   public String getName() {
+      if (m_nickName != null && m_nickName.length() > 0)
+         return m_nickName;
+      else
+         return m_firstName + " " + m_lastName;
    }
    
    public LocalDate getDOB() {
