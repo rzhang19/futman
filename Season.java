@@ -4,17 +4,24 @@ public class Season {
    // identifier
    private int m_id;
    
+   private Competition m_competition;
    private int m_year;
    
    private boolean m_completed;
    
-   public Season() {
+   public Season(Competition competition) {
       m_id = ID_COUNTER;
       ID_COUNTER++;
+      
+      m_competition = competition;
    }
    
    public boolean equals(Season other) {
       return m_id == other.getID();
+   }
+   
+   public String toString() {
+      return m_competition.getName() + " (" + m_year + ")";
    }
    
    public int getID() {
