@@ -1,10 +1,12 @@
-public class Match {
+public abstract class Match {
    private static int ID_COUNTER = 1;
    
    // Match identifier information
    private int m_id;
    
    // basic Match contents
+   private Country m_country;
+   
    private Team m_team1;
    private Team m_team2;
    private int m_score1 = 0;
@@ -15,13 +17,15 @@ public class Match {
    private boolean m_processed1 = false;
    private boolean m_processed2 = false;
    
-   public Match() {
-      this(new Team(), new Team());
+   public Match(Country country) {
+      this(new Team("", "", country), new Team("", "", country), country);
    }
    
-   public Match(Team team1, Team team2) {
+   public Match(Team team1, Team team2, Country country) {
       m_id = ID_COUNTER;
       ID_COUNTER++;
+      
+      m_country = country;
       
       m_team1 = team1;
       m_team2 = team2;
