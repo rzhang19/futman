@@ -90,7 +90,7 @@ public class Team {
    }
    
    private boolean calculateOverall() {
-      // to be done in FUTMAN-22
+      m_overall = (m_attOverall + m_midOverall + m_defOverall + m_gkOverall) / 4;
       return true;
    }
    
