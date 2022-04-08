@@ -192,6 +192,7 @@ public abstract class Match {
     	  m_halfMinute = 0;
       }
 	  
+      m_finished = true;
       return true;
    }
    
