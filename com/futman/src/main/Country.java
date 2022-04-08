@@ -1,3 +1,6 @@
+package com.futman.src.main;
+
+
 public class Country {
    private static int ID_COUNTER = 1;
    private static String[] ALL_CODES = new String[200];
