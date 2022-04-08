@@ -10,33 +10,40 @@ public class Player {
    private static final int DEFAULT_ATTR_VALUES = 50;
    
    // weights for each position
-   private static final int ATT_SPEED_WEIGHT = 1;
-   private static final int ATT_SHOOT_WEIGHT = 1;
+   private static final int ATT_SPEED_WEIGHT = 4;
+   private static final int ATT_SHOOT_WEIGHT = 5;
    private static final int ATT_TACKL_WEIGHT = 1;
-   private static final int ATT_PASS_WEIGHT = 1;
+   private static final int ATT_PASS_WEIGHT = 2;
    private static final int ATT_REACT_WEIGHT = 1;
    private static final int ATT_BLOCK_WEIGHT = 1;
    
    private static final int MID_SPEED_WEIGHT = 1;
-   private static final int MID_SHOOT_WEIGHT = 1;
-   private static final int MID_TACKL_WEIGHT = 1;
-   private static final int MID_PASS_WEIGHT = 1;
-   private static final int MID_REACT_WEIGHT = 1;
+   private static final int MID_SHOOT_WEIGHT = 2;
+   private static final int MID_TACKL_WEIGHT = 3;
+   private static final int MID_PASS_WEIGHT = 5;
+   private static final int MID_REACT_WEIGHT = 4;
    private static final int MID_BLOCK_WEIGHT = 1;
    
    private static final int DEF_SPEED_WEIGHT = 1;
    private static final int DEF_SHOOT_WEIGHT = 1;
-   private static final int DEF_TACKL_WEIGHT = 1;
-   private static final int DEF_PASS_WEIGHT = 1;
-   private static final int DEF_REACT_WEIGHT = 1;
-   private static final int DEF_BLOCK_WEIGHT = 1;
+   private static final int DEF_TACKL_WEIGHT = 5;
+   private static final int DEF_PASS_WEIGHT = 2;
+   private static final int DEF_REACT_WEIGHT = 3;
+   private static final int DEF_BLOCK_WEIGHT = 5;
    
    private static final int GK_SPEED_WEIGHT = 1;
    private static final int GK_SHOOT_WEIGHT = 1;
-   private static final int GK_TACKL_WEIGHT = 1;
-   private static final int GK_PASS_WEIGHT = 1;
-   private static final int GK_REACT_WEIGHT = 1;
-   private static final int GK_BLOCK_WEIGHT = 1;
+   private static final int GK_TACKL_WEIGHT = 2;
+   private static final int GK_PASS_WEIGHT = 4;
+   private static final int GK_REACT_WEIGHT = 5;
+   private static final int GK_BLOCK_WEIGHT = 5;
+   
+   private static final int NONE_SPEED_WEIGHT = 1;
+   private static final int NONE_SHOOT_WEIGHT = 1;
+   private static final int NONE_TACKL_WEIGHT = 1;
+   private static final int NONE_PASS_WEIGHT = 1;
+   private static final int NONE_REACT_WEIGHT = 1;
+   private static final int NONE_BLOCK_WEIGHT = 1;
    
    // public enumeration of all Positions for a Player
    public enum Position {
@@ -186,12 +193,79 @@ public class Player {
    }
    
    public int getOverall() {
-      // needs to be implemented
-      return m_overall;
+	  if (!calculateOverall())
+		  System.err.println("Error calculating overall!");
+	  
+	  return m_overall;
    }
    
    private boolean calculateOverall() {
-      // needs to be implemented
-      return true;
-   }
+	   int m_speedWeighted;
+	   int m_shootWeighted;
+	   int m_tacklWeighted;
+	   int m_passWeighted;
+	   int m_reactWeighted;
+	   int m_blockWeighted;
+	   
+	   int weightSum = 6;
+	   
+	   if (getPosition() == Position.ATT) {
+		   m_speedWeighted = ATT_SPEED_WEIGHT * m_speed;
+		   m_shootWeighted = ATT_SHOOT_WEIGHT * m_shooting;
+		   m_tacklWeighted = ATT_TACKL_WEIGHT * m_tackling;
+		   m_passWeighted = ATT_PASS_WEIGHT * m_passing;
+		   m_reactWeighted = ATT_REACT_WEIGHT * m_reactions;
+		   m_blockWeighted = ATT_BLOCK_WEIGHT * m_blocking;
+		   
+		   weightSum = ATT_SPEED_WEIGHT + ATT_SHOOT_WEIGHT + ATT_TACKL_WEIGHT + ATT_PASS_WEIGHT + ATT_REACT_WEIGHT + ATT_BLOCK_WEIGHT;
+	   }
+	   
+	   else if (getPosition() == Position.MID) {
+		   m_speedWeighted = MID_SPEED_WEIGHT * m_speed;
+		   m_shootWeighted = MID_SHOOT_WEIGHT * m_shooting;
+		   m_tacklWeighted = MID_TACKL_WEIGHT * m_tackling;
+		   m_passWeighted = MID_PASS_WEIGHT * m_passing;
+		   m_reactWeighted = MID_REACT_WEIGHT * m_reactions;
+		   m_blockWeighted = MID_BLOCK_WEIGHT * m_blocking;
+		   
+		   weightSum = MID_SPEED_WEIGHT + MID_SHOOT_WEIGHT + MID_TACKL_WEIGHT + MID_PASS_WEIGHT + MID_REACT_WEIGHT + MID_BLOCK_WEIGHT;
+	   }
+	   
+	   else if (getPosition() == Position.DEF) {
+		   m_speedWeighted = DEF_SPEED_WEIGHT * m_speed;
+		   m_shootWeighted = DEF_SHOOT_WEIGHT * m_shooting;
+		   m_tacklWeighted = DEF_TACKL_WEIGHT * m_tackling;
+		   m_passWeighted = DEF_PASS_WEIGHT * m_passing;
+		   m_reactWeighted = DEF_REACT_WEIGHT * m_reactions;
+		   m_blockWeighted = DEF_BLOCK_WEIGHT * m_blocking;
+		   
+		   weightSum = DEF_SPEED_WEIGHT + DEF_SHOOT_WEIGHT + DEF_TACKL_WEIGHT + DEF_PASS_WEIGHT + DEF_REACT_WEIGHT + DEF_BLOCK_WEIGHT;
+	   }
+	   
+	   else if (getPosition() == Position.GK) {
+		   m_speedWeighted = GK_SPEED_WEIGHT * m_speed;
+		   m_shootWeighted = GK_SHOOT_WEIGHT * m_shooting;
+		   m_tacklWeighted = GK_TACKL_WEIGHT * m_tackling;
+		   m_passWeighted = GK_PASS_WEIGHT * m_passing;
+		   m_reactWeighted = GK_REACT_WEIGHT * m_reactions;
+		   m_blockWeighted = GK_BLOCK_WEIGHT * m_blocking;
+		   
+		   weightSum = GK_SPEED_WEIGHT + GK_SHOOT_WEIGHT + GK_TACKL_WEIGHT + GK_PASS_WEIGHT + GK_REACT_WEIGHT + GK_BLOCK_WEIGHT;
+	   }
+	   
+	   else {
+		   m_speedWeighted = NONE_SPEED_WEIGHT * m_speed;
+		   m_shootWeighted = NONE_SHOOT_WEIGHT * m_shooting;
+		   m_tacklWeighted = NONE_TACKL_WEIGHT * m_tackling;
+		   m_passWeighted = NONE_PASS_WEIGHT * m_passing;
+		   m_reactWeighted = NONE_REACT_WEIGHT * m_reactions;
+		   m_blockWeighted = NONE_BLOCK_WEIGHT * m_blocking;
+		   
+		   weightSum = NONE_SPEED_WEIGHT + NONE_SHOOT_WEIGHT + NONE_TACKL_WEIGHT + NONE_PASS_WEIGHT + NONE_REACT_WEIGHT + NONE_BLOCK_WEIGHT;
+	   }
+      
+	   m_overall = (m_speedWeighted + m_shootWeighted + m_tacklWeighted + m_passWeighted + m_reactWeighted + m_blockWeighted) / weightSum;
+	   
+	   return true;
+   	}
 }
