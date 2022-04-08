@@ -1,7 +1,20 @@
 package com.futman.src.main;
 
+import java.util.Random;
+
 public abstract class Match {
+   private static Random rand = new Random();
+   
    private static int ID_COUNTER = 1;
+   
+   // maximum interval between events
+   private static final int EVENT_MAX = 10;
+   
+   // length of a half
+   private static final int[] PERIOD_LENGTH = new int[] {45,45};
+   private static final int NUM_PERIODS = 2;
+   private static final int[] OVERTIME_LENGTH = new int[] {15,15};
+   private static final int NUM_OVERTIME = 2;
    
    // Match identifier information
    private int m_id;
@@ -14,16 +27,27 @@ public abstract class Match {
    private int m_score1 = 0;
    private int m_score2 = 0;
    
-   // Match runner helpers
+   // meta Match runner helpers
    private boolean m_finished = false;
    private boolean m_processed1 = false;
    private boolean m_processed2 = false;
+   
+   // match runner helpers
+   private int m_halfMinute = 0;
+   private int m_minute = 0;
+   private int m_period = 0;
+   private boolean m_needOvertime;	// default will be false
+   private boolean m_team1Poss;
    
    public Match(Country country) {
       this(new Team("", "", country), new Team("", "", country), country);
    }
    
    public Match(Team team1, Team team2, Country country) {
+	   this(team1, team2, country, false);
+   }
+   
+   public Match(Team team1, Team team2, Country country, boolean needOvertime) {
       m_id = ID_COUNTER;
       ID_COUNTER++;
       
@@ -31,6 +55,9 @@ public abstract class Match {
       
       m_team1 = team1;
       m_team2 = team2;
+      
+      m_needOvertime = needOvertime;
+      m_team1Poss = rand.nextBoolean();
    }
    
    public int getID() {
@@ -65,8 +92,107 @@ public abstract class Match {
    }
    
    public boolean runMatch() {
-      // needs to be implemented
-      // don't forget to change m_finished to true
+      while (m_period < NUM_PERIODS) {
+    	  while (m_halfMinute <= PERIOD_LENGTH[m_period]) {
+    		  // set proper minutes
+    		  int addMin = rand.nextInt(EVENT_MAX) + 1;
+    		  m_halfMinute += addMin;
+    		  
+    		  if (m_halfMinute >= PERIOD_LENGTH[m_period]) {
+    			  m_halfMinute = PERIOD_LENGTH[m_period];
+    		  }
+    		  
+    		  m_minute = m_halfMinute;
+    		  for (int x = 0; x < m_period; x++) {
+    			  m_minute += PERIOD_LENGTH[x];
+    		  }
+    		  
+    		  boolean poss = m_team1Poss;
+    		  
+    		  // need to replace all getOverall() with its proper fields, as dictated by the comments below
+    		  // midfield vs midfield
+    		  if (poss == m_team1Poss) {
+    			  int attTeam;
+    			  int defTeam;
+    			  
+    			  if (m_team1Poss) {
+    				  attTeam = m_team1.getOverall();
+    				  defTeam = m_team2.getOverall();
+    			  }
+    			  
+    			  else {
+    				  attTeam = m_team2.getOverall();
+    				  defTeam = m_team1.getOverall();
+    			  }
+    			  
+    			  int randomAtt = rand.nextInt(attTeam);
+    			  int randomDef = rand.nextInt(defTeam);
+    			  
+    			  if (randomAtt <= randomDef) {
+    				  m_team1Poss = !m_team1Poss;
+    			  }
+    		  }
+    		  
+    		  // att vs def
+    		  if (poss == m_team1Poss) {
+    			  int attTeam;
+    			  int defTeam;
+    			  
+    			  if (m_team1Poss) {
+    				  attTeam = m_team1.getOverall();
+    				  defTeam = m_team2.getOverall();
+    			  }
+    			  
+    			  else {
+    				  attTeam = m_team2.getOverall();
+    				  defTeam = m_team1.getOverall();
+    			  }
+    			  
+    			  int randomAtt = rand.nextInt(attTeam);
+    			  int randomDef = rand.nextInt(defTeam);
+    			  
+    			  if (randomAtt <= randomDef) {
+    				  m_team1Poss = !m_team1Poss;
+    			  }
+    		  }
+    		  
+    		  // att vs gk
+    		  if (poss == m_team1Poss) {
+    			  int attTeam;
+    			  int defTeam;
+    			  
+    			  if (m_team1Poss) {
+    				  attTeam = m_team1.getOverall();
+    				  defTeam = m_team2.getOverall();
+    			  }
+    			  
+    			  else {
+    				  attTeam = m_team2.getOverall();
+    				  defTeam = m_team1.getOverall();
+    			  }
+    			  
+    			  int randomAtt = rand.nextInt(attTeam);
+    			  int randomDef = rand.nextInt(defTeam);
+    			  
+    			  if (randomAtt > randomDef) {
+    				  if (m_team1Poss) {
+    					  m_score1++;
+    				  }
+    				  
+    				  else {
+    					  m_score2++;
+    				  }
+    			  }
+    			  
+    			  m_team1Poss = !m_team1Poss;
+    		  }
+    	  }
+    	  
+    	  m_period++;
+    	  m_halfMinute = 0;
+      }
+	  
+      m_finished = true;
       return true;
    }
    
