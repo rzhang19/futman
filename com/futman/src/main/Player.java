@@ -83,6 +83,10 @@ public class Player {
       this("","","",LocalDate.of(1900,1,1));
    }
    
+   public Player(String firstName, String lastName, LocalDate dob) {
+	   this (firstName, lastName, "", dob);
+   }
+   
    public Player(String firstName, String lastName, String nickName, LocalDate dob) {
       this(firstName, lastName, nickName, dob, Position.NONE);
    }
@@ -98,7 +102,7 @@ public class Player {
       m_firstName = firstName;
       m_lastName = lastName;
       
-      if (m_nickName != null && m_nickName.length() > 0)
+      if (nickName != null && nickName.length() > 0)
          m_nickName = nickName;
       
       m_dob = dob;
@@ -122,7 +126,7 @@ public class Player {
    }
    
    public String toString() {
-      return getName() + " (" + m_position + ")";
+      return getName() + " (" + getPosition() + ")";
    }
    
    public String getFirstName() {
@@ -134,7 +138,10 @@ public class Player {
    }
    
    public String getNickName() {
-      return m_nickName;
+	  if (m_nickName != null && m_nickName.length() > 0)
+		  return m_nickName;
+	  else
+		  return "";
    }
    
    public String getName() {
@@ -148,8 +155,21 @@ public class Player {
       return m_dob;
    }
    
-   public Position getPosition() {
+   public Position getPositionEnum() {
       return m_position;
+   }
+   
+   public String getPosition() {
+	   if (m_position == Position.ATT)
+		   return "ATT";
+	   else if (m_position == Position.MID)
+		   return "MID";
+	   else if (m_position == Position.DEF)
+		   return "DEF";
+	   else if (m_position == Position.GK)
+		   return "GK";
+	   else
+		   return "NONE";
    }
    
    public int getSeasonGoals() {
@@ -209,7 +229,7 @@ public class Player {
 	   
 	   int weightSum = 6;
 	   
-	   if (getPosition() == Position.ATT) {
+	   if (getPositionEnum() == Position.ATT) {
 		   m_speedWeighted = ATT_SPEED_WEIGHT * m_speed;
 		   m_shootWeighted = ATT_SHOOT_WEIGHT * m_shooting;
 		   m_tacklWeighted = ATT_TACKL_WEIGHT * m_tackling;
@@ -220,7 +240,7 @@ public class Player {
 		   weightSum = ATT_SPEED_WEIGHT + ATT_SHOOT_WEIGHT + ATT_TACKL_WEIGHT + ATT_PASS_WEIGHT + ATT_REACT_WEIGHT + ATT_BLOCK_WEIGHT;
 	   }
 	   
-	   else if (getPosition() == Position.MID) {
+	   else if (getPositionEnum() == Position.MID) {
 		   m_speedWeighted = MID_SPEED_WEIGHT * m_speed;
 		   m_shootWeighted = MID_SHOOT_WEIGHT * m_shooting;
 		   m_tacklWeighted = MID_TACKL_WEIGHT * m_tackling;
@@ -231,7 +251,7 @@ public class Player {
 		   weightSum = MID_SPEED_WEIGHT + MID_SHOOT_WEIGHT + MID_TACKL_WEIGHT + MID_PASS_WEIGHT + MID_REACT_WEIGHT + MID_BLOCK_WEIGHT;
 	   }
 	   
-	   else if (getPosition() == Position.DEF) {
+	   else if (getPositionEnum() == Position.DEF) {
 		   m_speedWeighted = DEF_SPEED_WEIGHT * m_speed;
 		   m_shootWeighted = DEF_SHOOT_WEIGHT * m_shooting;
 		   m_tacklWeighted = DEF_TACKL_WEIGHT * m_tackling;
@@ -242,7 +262,7 @@ public class Player {
 		   weightSum = DEF_SPEED_WEIGHT + DEF_SHOOT_WEIGHT + DEF_TACKL_WEIGHT + DEF_PASS_WEIGHT + DEF_REACT_WEIGHT + DEF_BLOCK_WEIGHT;
 	   }
 	   
-	   else if (getPosition() == Position.GK) {
+	   else if (getPositionEnum() == Position.GK) {
 		   m_speedWeighted = GK_SPEED_WEIGHT * m_speed;
 		   m_shootWeighted = GK_SHOOT_WEIGHT * m_shooting;
 		   m_tacklWeighted = GK_TACKL_WEIGHT * m_tackling;
