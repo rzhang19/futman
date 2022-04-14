@@ -129,11 +129,13 @@ public class Team {
    }
    
    public boolean addPlayers(Player[] players) {
-      int addable = players.length;
+      int addable = 0;
+      Player[] toAdd = new Player[players.length];
       
       for (int x = 0; x < players.length; x++) {
-         if (findPlayer(players[x])) {
-            addable--;
+         if (findPlayer(players[x]) < 0 && findPlayer(toAdd, players[x]) < 0) {
+            toAdd[addable] = players[x];
+            addable++;
          }
       }
       
@@ -141,11 +143,13 @@ public class Team {
          return false;
       }
       
-      for (int x = 0; x < players.length; x++) {
-         if (!findPlayer(players[x])) {
-            players[m_playerCount] = players[x];
-            m_playerCount++;
-         }
+      if (addable == 0) {
+    	  return false;
+      }
+      
+      for (int x = 0; x < toAdd.length; x++) {
+         m_players[m_playerCount] = toAdd[x];
+         m_playerCount++;
       }
       
       return true;
@@ -160,7 +164,7 @@ public class Team {
    }
    
    public boolean addPlayer(Player player) {
-      if (m_playerCount < MAX_PLAYERS) {
+      if (m_playerCount < MAX_PLAYERS && findPlayer(player) < 0) {
          m_players[m_playerCount] = player;
          m_playerCount++;
          
@@ -170,31 +174,29 @@ public class Team {
       return false;
    }
    
-   public boolean findPlayer(Player player) {
-      for (int x = 0; x < m_players.length; x++) {
+   public int findPlayer(Player player) {
+      for (int x = 0; x < m_playerCount; x++) {
          if (m_players[x].equals(player)) {
-            return true;
+            return x;
          }
       }
       
-      return false;
+      return -1;
+   }
+   
+   public int findPlayer(Player[] players, Player findMe) {
+	   for (int x = 0; x < players.length; x++) {
+		   if (players[x] != null && players[x].equals(findMe))
+			   return x;
+	   }
+	   
+	   return -1;
    }
    
    public boolean removePlayer(Player player) {
-      if (!findPlayer(player))
-         return false;
-      
-      int index = 0;
-      boolean found = false;
-      
-      while (index < m_playerCount && !found) {
-         if (m_players[index].equals(player)) {
-            found = true;
-         }
-         
-         else
-            index++;
-      }
+	   int index = findPlayer(player);
+	   if (index < 0)
+		   return false;
       
       m_players[index] = m_players[m_playerCount - 1];
       m_playerCount--;
