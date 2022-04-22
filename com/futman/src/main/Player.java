@@ -288,4 +288,20 @@ public class Player {
 	   
 	   return true;
    	}
+   
+   public boolean addGoal() {
+	   m_seasonGoals++;
+	   return true;
+   }
+   
+   public boolean addGoals(int goals) {
+	   m_seasonGoals += goals;
+	   return true;
+   }
+   
+   // for testing and internal use only
+   public boolean resetGoals() {
+	   m_seasonGoals = 0;
+	   return true;
+   }
 }
