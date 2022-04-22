@@ -28,6 +28,7 @@ class PlayerTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		assert(player1.resetGoals());
 	}
 
 	@AfterEach
@@ -161,8 +162,17 @@ class PlayerTest {
 	
 	@Test
 	void test_getOverall() {
-		System.out.println(player1.getOverall());
 		assert player1.getOverall() == 77;
 		assert player2.getOverall() == 50;
+	}
+	
+	@Test
+	void test_addGoals() {
+		assert(player1.getSeasonGoals() == 0);
+		assert(player1.addGoal());
+		assert(player1.getSeasonGoals() == 1);
+		assert(player1.addGoals(5));
+		assert(player1.getSeasonGoals() == 6);
+		assert(player1.resetGoals());
 	}
 }
