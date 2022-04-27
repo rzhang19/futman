@@ -116,13 +116,13 @@ public abstract class Match {
     			  int defTeam;
     			  
     			  if (m_team1Poss) {
-    				  attTeam = m_team1.getOverall();
-    				  defTeam = m_team2.getOverall();
+    				  attTeam = m_team1.getMidOverall();
+    				  defTeam = m_team2.getMidOverall();
     			  }
     			  
     			  else {
-    				  attTeam = m_team2.getOverall();
-    				  defTeam = m_team1.getOverall();
+    				  attTeam = m_team2.getMidOverall();
+    				  defTeam = m_team1.getMidOverall();
     			  }
     			  
     			  int randomAtt = rand.nextInt(attTeam);
@@ -139,13 +139,13 @@ public abstract class Match {
     			  int defTeam;
     			  
     			  if (m_team1Poss) {
-    				  attTeam = m_team1.getOverall();
-    				  defTeam = m_team2.getOverall();
+    				  attTeam = m_team1.getAttOverall();
+    				  defTeam = m_team2.getDefOverall();
     			  }
     			  
     			  else {
-    				  attTeam = m_team2.getOverall();
-    				  defTeam = m_team1.getOverall();
+    				  attTeam = m_team2.getAttOverall();
+    				  defTeam = m_team1.getDefOverall();
     			  }
     			  
     			  int randomAtt = rand.nextInt(attTeam);
@@ -162,13 +162,13 @@ public abstract class Match {
     			  int defTeam;
     			  
     			  if (m_team1Poss) {
-    				  attTeam = m_team1.getOverall();
-    				  defTeam = m_team2.getOverall();
+    				  attTeam = m_team1.getAttOverall();
+    				  defTeam = m_team2.getGKOverall();
     			  }
     			  
     			  else {
-    				  attTeam = m_team2.getOverall();
-    				  defTeam = m_team1.getOverall();
+    				  attTeam = m_team2.getAttOverall();
+    				  defTeam = m_team1.getGKOverall();
     			  }
     			  
     			  int randomAtt = rand.nextInt(attTeam);
