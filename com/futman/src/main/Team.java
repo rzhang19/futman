@@ -1,4 +1,7 @@
 package com.futman.src.main;
+
+import com.futman.src.main.Player.Position;
+
 public class Team {
    private static int ID_COUNTER = 1;
    private static final int MAX_PLAYERS = 50;
@@ -68,18 +71,38 @@ public class Team {
    }
    
    public int getAttOverall() {
+	   boolean calculate = calculateAttOverall();
+	   
+	   if (!calculate)
+		   System.err.println("Error calculating attack overall");
+	   
       return m_attOverall;
    }
    
    public int getMidOverall() {
+	   boolean calculate = calculateMidOverall();
+	   
+	   if (!calculate)
+		   System.err.println("Error calculating midfield overall");
+	   
       return m_midOverall;
    }
    
    public int getDefOverall() {
+	   boolean calculate = calculateDefOverall();
+	   
+	   if (!calculate)
+		   System.err.println("Error calculating defense overall");
+	   
       return m_defOverall;
    }
    
    public int getGKOverall() {
+	   boolean calculate = calculateGKOverall();
+	   
+	   if (!calculate)
+		   System.err.println("Error calculating goalkeeping overall");
+	   
       return m_gkOverall;
    }
    
@@ -93,6 +116,70 @@ public class Team {
    private boolean calculateOverall() {
       m_overall = (m_attOverall + m_midOverall + m_defOverall + m_gkOverall) / 4;
       return true;
+   }
+   
+   private boolean calculateAttOverall() {
+	   int sum = 0;
+	   int count = 0;
+	   
+	   for (int x = 0; x < m_playerCount; x++) {
+		   if (m_players[x].getPositionEnum() == Position.ATT) {
+			   sum += m_players[x].getOverall();
+			   count++;
+		   }
+	   }
+	   
+	   m_attOverall = count == 0 ? 0 : sum / count;
+	   
+	   return true;
+   }
+   
+   private boolean calculateMidOverall() {
+	   int sum = 0;
+	   int count = 0;
+	   
+	   for (int x = 0; x < m_playerCount; x++) {
+		   if (m_players[x].getPositionEnum() == Position.MID) {
+			   sum += m_players[x].getOverall();
+			   count++;
+		   }
+	   }
+	   
+	   m_midOverall = count == 0 ? 0 : sum / count;
+	   
+	   return true;
+   }
+   
+   private boolean calculateDefOverall() {
+	   int sum = 0;
+	   int count = 0;
+	   
+	   for (int x = 0; x < m_playerCount; x++) {
+		   if (m_players[x].getPositionEnum() == Position.DEF) {
+			   sum += m_players[x].getOverall();
+			   count++;
+		   }
+	   }
+	   
+	   m_defOverall = count == 0 ? 0 : sum / count;
+	   
+	   return true;
+   }
+   
+   private boolean calculateGKOverall() {
+	   int sum = 0;
+	   int count = 0;
+	   
+	   for (int x = 0; x < m_playerCount; x++) {
+		   if (m_players[x].getPositionEnum() == Position.GK) {
+			   sum += m_players[x].getOverall();
+			   count++;
+		   }
+	   }
+	   
+	   m_gkOverall = count == 0 ? 0 : sum / count;
+	   
+	   return true;
    }
    
    public boolean processMatch(Match match) {

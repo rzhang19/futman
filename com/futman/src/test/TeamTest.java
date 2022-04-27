@@ -82,11 +82,23 @@ class TeamTest {
 	
 	@Test
 	void test_overalls() {
+		team1.removePlayer(player1);
+		team1.removePlayer(player2);
+		team1.removePlayer(player3);
+		team1.removePlayer(player4);
+		
 		assert team1.getAttOverall() == 0;
 		assert team1.getMidOverall() == 0;
 		assert team1.getDefOverall() == 0;
 		assert team1.getGKOverall() == 0;
 		assert team1.getOverall() == 0;
+		
+		team1.addPlayer(player1);
+		
+		assert team1.getAttOverall() == 80;
+		assert team1.getMidOverall() == 0;
+		assert team1.getDefOverall() == 0;
+		assert team1.getGKOverall() == 0;
 	}
 	
 	@Test
