@@ -17,9 +17,11 @@ public abstract class Competition {
    
    private Country m_country;
 
-   private int MAX_SIZE;
+   private int MAX_SIZE;	// maximum possible size of the teams
    private Team[] m_teams;
    private int m_teamCount;
+   
+   private int m_maxMatchesSeason; // maximum number of matches per season
    
    private ArrayList<Season> m_seasons;
    private int m_seasonCount;
@@ -128,4 +130,22 @@ public abstract class Competition {
       
       return -1;
    }
+   
+   public Team[] getTeams() {
+	   return m_teams;
+   }
+   
+   public int getMaxSize() {
+	   	return MAX_SIZE;
+   }
+   
+   protected int getMaxMatchesPerSeason() {
+	   if (calculateMaxMatches())
+		   return m_maxMatchesSeason;
+	   
+	   System.err.println("Error calculating number of matches for competition");
+	   return m_maxMatchesSeason;
+   }
+   
+   protected abstract boolean calculateMaxMatches();
 }
