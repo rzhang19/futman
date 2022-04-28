@@ -140,6 +140,12 @@ public abstract class Competition {
    }
    
    protected int getMaxMatchesPerSeason() {
+	   if (calculateMaxMatches())
+		   return m_maxMatchesSeason;
+	   
+	   System.err.println("Error calculating number of matches for competition");
 	   return m_maxMatchesSeason;
    }
+   
+   protected abstract boolean calculateMaxMatches();
 }
