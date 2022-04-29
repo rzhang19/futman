@@ -31,6 +31,8 @@ public class Season {
       m_maxMatchCount = competition.getMaxMatchesPerSeason();
       m_matches = new Match[m_maxMatchCount];
       m_currMatchCount = 0;
+      
+      setYear();
    }
    
    public boolean equals(Season other) {
@@ -47,6 +49,11 @@ public class Season {
    
    public int getYear() {
       return m_year;
+   }
+   
+   private boolean setYear() {
+	   m_year = Competition.getYear();
+	   return true;
    }
    
    public boolean getCompleted() {
