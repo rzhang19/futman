@@ -169,7 +169,7 @@ class PlayerTest {
 	@Test
 	void test_addGoals() {
 		assert(player1.getSeasonGoals() == 0);
-		assert(player1.addGoal());
+		assert(player1.addGoals(1));
 		assert(player1.getSeasonGoals() == 1);
 		assert(player1.addGoals(5));
 		assert(player1.getSeasonGoals() == 6);
