@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public abstract class Competition {
    private static int ID_COUNTER = 1;
    
-   private static final int DEFAULT_MAX_TEAMS = 64;
+   protected static final int DEFAULT_MAX_TEAMS = 64;
    
    // identifiers
    private int m_id;
