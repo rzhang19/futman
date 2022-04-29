@@ -2,6 +2,7 @@ package com.futman.src.main;
 
 
 
+import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Competition {
@@ -23,7 +24,7 @@ public abstract class Competition {
    
    private int m_maxMatchesSeason; // maximum number of matches per season
    
-   private ArrayList<Season> m_seasons;
+   private List<Season> m_seasons;
    private int m_seasonCount;
    
    public Competition(Country country) {
@@ -56,6 +57,15 @@ public abstract class Competition {
    
    public String getName() {
       return m_name;
+   }
+   
+   public static int getYear() {
+	   return m_currentYear;
+   }
+   
+   private static boolean nextYear() {
+	   m_currentYear++;
+	   return true;
    }
    
    public Country getCountry() {
@@ -148,4 +158,12 @@ public abstract class Competition {
    }
    
    protected abstract boolean calculateMaxMatches();
+   
+   public List<Season> getSeasons() {
+	   return m_seasons;
+   }
+   
+   public Season getCurrentSeason() {
+	   return m_seasons.get(m_seasonCount);
+   }
 }
