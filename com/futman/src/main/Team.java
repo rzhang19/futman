@@ -16,6 +16,7 @@ public class Team {
    private int m_seasonWins = 0;
    private int m_seasonDraws = 0;
    private int m_seasonLosses = 0;
+   private int m_seasonGoals = 0;
    
    // Attribute values
    private int m_attOverall = 0;
@@ -68,6 +69,20 @@ public class Team {
    
    public int getSeasonLosses() {
       return m_seasonLosses;
+   }
+   
+   public int getSeasonGoals() {
+	   return m_seasonGoals;
+   }
+   
+   public boolean addGoals(int goals) {
+	   m_seasonGoals += goals;
+	   return true;
+   }
+   
+   public boolean resetGoals() {
+	   m_seasonGoals = 0;
+	   return true;
    }
    
    public int getAttOverall() {

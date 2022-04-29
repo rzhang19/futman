@@ -289,11 +289,6 @@ public class Player {
 	   return true;
    	}
    
-   public boolean addGoal() {
-	   m_seasonGoals++;
-	   return true;
-   }
-   
    public boolean addGoals(int goals) {
 	   m_seasonGoals += goals;
 	   return true;

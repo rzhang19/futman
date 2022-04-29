@@ -136,4 +136,13 @@ class TeamTest {
 		assert !(team1.removePlayer(player1));
 		assert team1.getPlayerCount() == 0;
 	}
+	
+	@Test
+	void test_goals() {
+		assert team1.getSeasonGoals() == 0;
+		assert team1.addGoals(5);
+		assert team1.getSeasonGoals() == 5;
+		assert team1.resetGoals();
+		assert team1.getSeasonGoals() == 0;
+	}
 }
