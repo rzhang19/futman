@@ -15,7 +15,7 @@ public class Cup extends Competition {
 
 	@Override
 	protected boolean calculateMaxMatches() {
-		// TODO Auto-generated method stub
-		return false;
+		setMaxMatches(0);
+		return true;
 	}
 }

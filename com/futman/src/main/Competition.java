@@ -81,17 +81,13 @@ public abstract class Competition {
    }
    
    public boolean addTeams(Team[] teams) {
-      Team[] temp = new Team[m_teams.length + teams.length];
+      Team[] toAdd = new Team[teams.length];
       int added = 0;
       
-      for (int x = 0; x < m_teams.length; x++) {
-         temp[x] = m_teams[x];
-      }
-      
       for (int x = 0; x < teams.length; x++) {
-         if (findTeam(teams[x]) == -1) {
-            temp[m_teamCount + x] = teams[x];
-            added++;
+         if (findTeam(teams[x]) < 0 && findTeam(toAdd, teams[x]) < 0) {
+        	 toAdd[added] = teams[x];
+        	 added++;
          }
       }
       
@@ -99,22 +95,22 @@ public abstract class Competition {
          return false;
       }
       
-      else {
-         for (int x = m_teamCount; x < added; x++) {
-            m_teams[x] = temp[x];
-         }
-         
-         m_teamCount += added;
-         
-         return true;
+      if (added == 0)
+    	  return false;
+      
+      for (int x = 0; x < toAdd.length; x++) {
+    	  m_teams[m_teamCount] = toAdd[x];
+    	  m_teamCount++;
       }
+      
+      return true;
    }
    
    public boolean removeTeam(Team team) {
       int index = findTeam(team);
       
       if (index >= 0) {
-         m_teams[index] = m_teams[m_teamCount];
+         m_teams[index] = m_teams[m_teamCount - 1];
          m_teamCount--;
          return true;
       }
@@ -124,7 +120,7 @@ public abstract class Competition {
    }
    
    public int findTeam(Team team) {
-      for (int x = 0; x < m_teams.length; x++) {
+      for (int x = 0; x < m_teamCount; x++) {
          if (m_teams[x].equals(team))
             return x;
       }
@@ -134,7 +130,7 @@ public abstract class Competition {
    
    public static int findTeam(Team[] teams, Team team) {
       for (int x = 0; x < teams.length; x++) {
-         if (teams[x].equals(team))
+         if (teams[x] != null && teams[x].equals(team))
             return x;
       }
       
@@ -145,16 +141,25 @@ public abstract class Competition {
 	   return m_teams;
    }
    
+   public int getTeamCount() {
+	   return m_teamCount;
+   }
+   
    public int getMaxSize() {
 	   	return MAX_SIZE;
    }
    
-   protected int getMaxMatchesPerSeason() {
+   public int getMaxMatchesPerSeason() {
 	   if (calculateMaxMatches())
 		   return m_maxMatchesSeason;
 	   
 	   System.err.println("Error calculating number of matches for competition");
 	   return m_maxMatchesSeason;
+   }
+   
+   public boolean setMaxMatches(int value) {
+	   m_maxMatchesSeason = value;
+	   return true;
    }
    
    protected abstract boolean calculateMaxMatches();
@@ -164,6 +169,9 @@ public abstract class Competition {
    }
    
    public Season getCurrentSeason() {
+	   if (m_seasons == null)
+		   return null;
+	   
 	   return m_seasons.get(m_seasonCount);
    }
 }
