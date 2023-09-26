@@ -52,7 +52,7 @@ public class Season {
    }
    
    private boolean setYear() {
-	   m_year = Competition.getYear();
+	   m_year = m_competition.getYear();
 	   return true;
    }
    

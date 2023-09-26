@@ -1,7 +1,5 @@
 package com.futman.src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -58,7 +56,9 @@ class CompetitionTest {
 	
 	@Test
 	void test_getYear() {
-		assert Competition.getYear() == 2022;
+		assert comp1.getYear() == Competition.getStartingYear();
+		assert comp1.nextYear();
+		assert comp1.getYear() == Competition.getStartingYear() + 1;
 	}
 	
 	@Test
