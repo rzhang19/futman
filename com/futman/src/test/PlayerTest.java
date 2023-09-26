@@ -176,4 +176,10 @@ class PlayerTest {
 		assert(player1.resetGoals());
 		assert(player1.getSeasonGoals() == 0);
 	}
+	
+	@Test
+	void test_teamMethods() {
+		assert player1.getTeam() == null;
+		assert player1.isFreeAgent();
+	}
 }
