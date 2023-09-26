@@ -174,5 +174,6 @@ class PlayerTest {
 		assert(player1.addGoals(5));
 		assert(player1.getSeasonGoals() == 6);
 		assert(player1.resetGoals());
+		assert(player1.getSeasonGoals() == 0);
 	}
 }

@@ -15,7 +15,7 @@ public class Cup extends Competition {
 
 	@Override
 	protected boolean calculateMaxMatches() {
-		setMaxMatches(0);
+		super.setMaxMatches(0);
 		return true;
 	}
 }

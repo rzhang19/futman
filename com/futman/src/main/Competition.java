@@ -9,12 +9,13 @@ public abstract class Competition {
    private static int ID_COUNTER = 1;
    
    protected static final int DEFAULT_MAX_TEAMS = 64;
+   private static final int STARTING_YEAR = 2023;
    
    // identifiers
    private int m_id;
    private String m_name;
    
-   private static int m_currentYear = 2022;
+   private int m_currentYear = STARTING_YEAR;
    
    private Country m_country;
 
@@ -59,11 +60,11 @@ public abstract class Competition {
       return m_name;
    }
    
-   public static int getYear() {
+   public int getYear() {
 	   return m_currentYear;
    }
    
-   private static boolean nextYear() {
+   public boolean nextYear() {
 	   m_currentYear++;
 	   return true;
    }
@@ -173,5 +174,9 @@ public abstract class Competition {
 		   return null;
 	   
 	   return m_seasons.get(m_seasonCount);
+   }
+   
+   public static int getStartingYear() {
+      return STARTING_YEAR;
    }
 }

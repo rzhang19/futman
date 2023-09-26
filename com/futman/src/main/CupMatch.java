@@ -1,9 +1,6 @@
 package com.futman.src.main;
 
 public class CupMatch extends Match {
-	public CupMatch(Country country) {
-		this (new Team("", "", country), new Team("", "", country), country);
-	}
 	
 	public CupMatch(Team team1, Team team2, Country country) {
 		this (team1, team2, country, true);
