@@ -79,6 +79,9 @@ public class Player {
    private int m_reactions;
    private int m_blocking;
    
+   private Team m_team;
+   private boolean m_isFreeAgent;
+   
    public Player() {
       this("","","",LocalDate.of(1900,1,1));
    }
@@ -115,6 +118,8 @@ public class Player {
       m_passing = passing;
       m_reactions = reactions;
       m_blocking = blocking;
+      
+      m_isFreeAgent = true;
    }
    
    public int getID() {
@@ -298,5 +303,13 @@ public class Player {
    public boolean resetGoals() {
 	   m_seasonGoals = 0;
 	   return true;
+   }
+   
+   public Team getTeam() {
+	   return m_team;
+   }
+   
+   public boolean isFreeAgent() {
+	   return m_isFreeAgent;
    }
 }
