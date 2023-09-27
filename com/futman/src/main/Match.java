@@ -3,12 +3,12 @@ package com.futman.src.main;
 import java.util.Random;
 
 public abstract class Match {
-   private static Random rand = new Random();
+   protected static Random rand = new Random();
    
    private static int ID_COUNTER = 1;
    
    // maximum interval between events
-   private static final int EVENT_MAX = 10;
+   protected static final int EVENT_MAX = 10;
    
    // length of a half
    private static final int[] PERIOD_LENGTH = new int[] {45,45};
@@ -22,22 +22,22 @@ public abstract class Match {
    // basic Match contents
    private Country m_country;
    
-   private Team m_team1;
-   private Team m_team2;
-   private int m_score1 = 0;
-   private int m_score2 = 0;
+   protected Team m_team1;
+   protected Team m_team2;
+   protected int m_score1 = 0;
+   protected int m_score2 = 0;
    
    // meta Match runner helpers
-   private boolean m_finished = false;
+   protected boolean m_finished = false;
    private boolean m_processed1 = false;
    private boolean m_processed2 = false;
    
    // match runner helpers
-   private int m_halfMinute = 0;
-   private int m_minute = 0;
+   protected int m_halfMinute = 0;
+   protected int m_minute = 0;
    private int m_period = 0;
-   private boolean m_needOvertime;	// default will be false
-   private boolean m_team1Poss;
+   protected boolean m_needOvertime;	// default will be false
+   protected boolean m_team1Poss;
    
    public Match(Country country) {
       this(new Team("", "", country), new Team("", "", country), country);
