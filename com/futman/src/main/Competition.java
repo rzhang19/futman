@@ -19,11 +19,11 @@ public abstract class Competition {
    
    private Country m_country;
 
-   private int MAX_SIZE;	// maximum possible size of the teams
+   protected int MAX_SIZE;	// maximum possible size of the teams
    private Team[] m_teams;
    private int m_teamCount;
    
-   private int m_maxMatchesSeason; // maximum number of matches per season
+   protected int m_maxMatchesSeason; // maximum number of matches per season
    
    private List<Season> m_seasons;
    private int m_seasonCount;
@@ -50,6 +50,8 @@ public abstract class Competition {
       
       m_seasons = new ArrayList<Season>();
       m_seasonCount = 0;
+      
+      this.calculateMaxMatches();
    }
    
    public int getID() {

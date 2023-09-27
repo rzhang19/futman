@@ -15,11 +15,13 @@ class CupTest {
 	static Country country = new Country("United States", "USA");
 	static Cup cup1;
 	static Cup cup2;
+	static Cup cup3;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		cup1 = new Cup("test", country, 20);
 		cup2 = new Cup("test 2", country, 40);
+		cup3 = new Cup("test 3", country, 32, 2, false);
 	}
 
 	@AfterAll
@@ -33,10 +35,11 @@ class CupTest {
 	@AfterEach
 	void tearDown() throws Exception {
 	}
-
+	
 	@Test
-	void test() {
-		assert true;
+	void test_calculateMaxMatches() {
+		assert cup1.getMaxMatchesPerSeason() == 20;
+		assert cup2.getMaxMatchesPerSeason() == 40;
+		assert cup3.getMaxMatchesPerSeason() == 63;
 	}
-
 }
