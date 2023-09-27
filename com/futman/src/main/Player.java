@@ -119,6 +119,7 @@ public class Player {
       m_reactions = reactions;
       m_blocking = blocking;
       
+      m_team = null;
       m_isFreeAgent = true;
    }
    
@@ -311,5 +312,28 @@ public class Player {
    
    public boolean isFreeAgent() {
 	   return m_isFreeAgent;
+   }
+   
+   public boolean addToTeam(Team team) {
+	   if (m_isFreeAgent) {
+		   m_team = team;
+		   return true;
+	   }
+	   
+	   else {
+		   if (m_team.equals(team))
+			   return false;
+		   m_team = team;
+		   return true;
+	   }
+   }
+   
+   public boolean isOnTeam(Team team) {
+	   if (!m_isFreeAgent)
+		   return false;
+	   if (m_team == null)
+		   return false;
+	   
+	   return m_team.equals(team);
    }
 }
