@@ -269,8 +269,7 @@ public class Team {
       if (m_playerCount < MAX_PLAYERS && findPlayer(player) < 0) {
          m_players[m_playerCount] = player;
          m_playerCount++;
-         
-         return true;
+         return player.addToTeam(this);
       }
       
       return false;

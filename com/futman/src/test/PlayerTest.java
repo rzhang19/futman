@@ -1,7 +1,5 @@
 package com.futman.src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.AfterAll;
@@ -12,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import com.futman.src.main.Player;
 import com.futman.src.main.Player.Position;
+import com.futman.src.main.Team;
+import com.futman.src.main.Country;
 
 class PlayerTest {
 	static Player player1 = new Player("test", "player", "", LocalDate.of(1999, 12, 1), Position.ATT, 80, 85, 65, 75, 70, 55 );
@@ -179,7 +179,20 @@ class PlayerTest {
 	
 	@Test
 	void test_teamMethods() {
-		assert player1.getTeam() == null;
-		assert player1.isFreeAgent();
+		assert player2.getTeam() == null;
+		assert player2.isFreeAgent();
+	}
+	
+	@Test
+	void test_isOnTeam() {
+		Team team1 = new Team("Test", "TE", new Country("United States", "USA"));
+		Team team2 = new Team("Test2", "TE2", new Country("United States", "USA"));
+		assert team1.addPlayer(player1);
+		
+		assert player1.isOnTeam(team1);
+		assert !player1.isOnTeam(team2);
+		
+		assert !player2.isOnTeam(team1);
+		assert !player2.isOnTeam(team2);
 	}
 }
