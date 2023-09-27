@@ -13,8 +13,8 @@ public abstract class Match {
    // length of a half
    private static final int[] PERIOD_LENGTH = new int[] {45,45};
    private static final int NUM_PERIODS = 2;
-   private static final int[] OVERTIME_LENGTH = new int[] {15,15};
-   private static final int NUM_OVERTIME = 2;
+   protected static final int[] OVERTIME_LENGTH = new int[] {15,15};
+   protected static final int NUM_OVERTIME = 2;
    
    // Match identifier information
    private int m_id;
@@ -99,7 +99,7 @@ public abstract class Match {
     		  m_halfMinute += addMin;
     		  
     		  if (m_halfMinute >= PERIOD_LENGTH[m_period]) {
-    			  m_halfMinute = PERIOD_LENGTH[m_period];
+    			  m_halfMinute = PERIOD_LENGTH[m_period] + 1;
     		  }
     		  
     		  m_minute = m_halfMinute;
@@ -116,13 +116,13 @@ public abstract class Match {
     			  int defTeam;
     			  
     			  if (m_team1Poss) {
-    				  attTeam = m_team1.getMidOverall();
-    				  defTeam = m_team2.getMidOverall();
+    				  attTeam = m_team1.getMidOverall() + 1;
+    				  defTeam = m_team2.getMidOverall() + 1;
     			  }
     			  
     			  else {
-    				  attTeam = m_team2.getMidOverall();
-    				  defTeam = m_team1.getMidOverall();
+    				  attTeam = m_team2.getMidOverall() + 1;
+    				  defTeam = m_team1.getMidOverall() + 1;
     			  }
     			  
     			  int randomAtt = rand.nextInt(attTeam);
@@ -139,13 +139,13 @@ public abstract class Match {
     			  int defTeam;
     			  
     			  if (m_team1Poss) {
-    				  attTeam = m_team1.getAttOverall();
-    				  defTeam = m_team2.getDefOverall();
+    				  attTeam = m_team1.getAttOverall() + 1;
+    				  defTeam = m_team2.getDefOverall() + 1;
     			  }
     			  
     			  else {
-    				  attTeam = m_team2.getAttOverall();
-    				  defTeam = m_team1.getDefOverall();
+    				  attTeam = m_team2.getAttOverall() + 1;
+    				  defTeam = m_team1.getDefOverall() + 1;
     			  }
     			  
     			  int randomAtt = rand.nextInt(attTeam);
@@ -162,13 +162,13 @@ public abstract class Match {
     			  int defTeam;
     			  
     			  if (m_team1Poss) {
-    				  attTeam = m_team1.getAttOverall();
-    				  defTeam = m_team2.getGKOverall();
+    				  attTeam = m_team1.getAttOverall() + 1;
+    				  defTeam = m_team2.getGKOverall() + 1;
     			  }
     			  
     			  else {
-    				  attTeam = m_team2.getAttOverall();
-    				  defTeam = m_team1.getGKOverall();
+    				  attTeam = m_team2.getAttOverall() + 1;
+    				  defTeam = m_team1.getGKOverall() + 1;
     			  }
     			  
     			  int randomAtt = rand.nextInt(attTeam);
