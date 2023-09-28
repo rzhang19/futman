@@ -8,8 +8,6 @@ public class Season {
    private Competition m_competition;
    private int m_year;
    
-   private boolean m_completed;
-   
    private Team[] m_teams;
    private int m_currTeamsCount;
    private int m_maxTeamCount;
@@ -19,6 +17,7 @@ public class Season {
    private int m_currMatchCount;
    
    private boolean m_started;
+   private boolean m_completed;
    
    public Season(Competition competition) {
       m_id = ID_COUNTER;
@@ -35,6 +34,7 @@ public class Season {
       m_currMatchCount = 0;
       
       m_started = false;
+      m_completed = false;
       
       setYear();
    }
@@ -60,10 +60,6 @@ public class Season {
 	   return true;
    }
    
-   public boolean getCompleted() {
-      return m_completed;
-   }
-   
    public Team[] getTeams() {
 	   return m_teams;
    }
@@ -84,10 +80,33 @@ public class Season {
 	   return m_started;
    }
    
+   public boolean getSeasonCompleted() {
+	   return m_completed;
+   }
+   
    public boolean startSeason() {
 	   if (!setYear())
 		   return false;
+	   
+	   if (m_completed)
+		   return false;
+	   
+	   if (m_started)
+		   return false;
+	   
 	   m_started = true;
+	   return true;
+   }
+   
+   public boolean completeSeason() {
+	   if (!m_started)
+		   return false;
+	   
+	   if (m_completed)
+		   return false;
+	   
+	   m_completed = true;
+	   m_started = false;
 	   return true;
    }
 }
