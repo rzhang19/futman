@@ -85,14 +85,20 @@ public class Season {
    }
    
    public boolean startSeason() {
-	   if (!setYear())
+	   if (!setYear()) {
+		   System.err.println("src.main.Season Error: unable to set year");
 		   return false;
+	   }
 	   
-	   if (m_completed)
+	   if (m_completed) {
+		   System.err.println("src.main.Season Error: season already completed");
 		   return false;
+	   }
 	   
-	   if (m_started)
+	   if (m_started) {
+		   System.err.println("src.main.Season Error: season already started");
 		   return false;
+	   }
 	   
 	   m_started = true;
 	   return true;

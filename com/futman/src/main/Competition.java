@@ -172,13 +172,50 @@ public abstract class Competition {
    }
    
    public Season getCurrentSeason() {
-	   if (m_seasons == null)
+	   if (m_seasons == null || m_seasonCount <= 0)
 		   return null;
 	   
-	   return m_seasons.get(m_seasonCount);
+	   return m_seasons.get(m_seasonCount - 1);
    }
    
    public static int getStartingYear() {
       return STARTING_YEAR;
+   }
+   
+   // should only ever be called outside of startNextSeason() once ever per Competition, at the very beginning, for the first season
+   public boolean startNewSeason() {
+	   Season newSeason = new Season(this);
+	   m_seasons.add(newSeason);
+	   m_seasonCount++;
+	   
+	   if (!(m_seasons.get(m_seasonCount - 1).startSeason())) {
+		   System.err.println("src.main.Competition Error: unable to start season");
+		   return false;
+	   }
+	   
+	   return true;
+   }
+   
+   public boolean endCurrentSeason() {
+	   if (!m_seasons.get(m_seasonCount - 1).completeSeason())
+		   return false;
+	   
+	   return true;
+   }
+   
+   public boolean startNextSeason() {
+	   if (!endCurrentSeason()) {
+		   System.err.println("src.main.Competition Error: unable to end current season");
+		   return false;
+	   }
+	   
+	   m_currentYear++;
+	   
+	   if (!startNewSeason()) {
+		   System.err.println("src.main.Competition Error: unable to start new season");
+		   return false;
+	   }
+	   
+	   return true;
    }
 }
