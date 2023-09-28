@@ -18,6 +18,8 @@ public class Season {
    private int m_maxMatchCount;
    private int m_currMatchCount;
    
+   private boolean m_started;
+   
    public Season(Competition competition) {
       m_id = ID_COUNTER;
       ID_COUNTER++;
@@ -31,6 +33,8 @@ public class Season {
       m_maxMatchCount = competition.getMaxMatchesPerSeason();
       m_matches = new Match[m_maxMatchCount];
       m_currMatchCount = 0;
+      
+      m_started = false;
       
       setYear();
    }
@@ -74,5 +78,16 @@ public class Season {
    
    public int getMatchesCount() {
 	   return m_currMatchCount;
+   }
+   
+   public boolean getSeasonStarted() {
+	   return m_started;
+   }
+   
+   public boolean startSeason() {
+	   if (!setYear())
+		   return false;
+	   m_started = true;
+	   return true;
    }
 }

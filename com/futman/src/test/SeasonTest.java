@@ -69,4 +69,11 @@ class SeasonTest {
 	   assert season1.getMatches().length == 0 || season1.getMatches()[0] == null;
 	   assert season1.getMatchesCount() == 0;
    }
+   
+   @Test
+   void test_seasonStarted() {
+	   assert !season1.getSeasonStarted();
+	   assert season1.startSeason();
+	   assert season1.getSeasonStarted();
+   }
 }
