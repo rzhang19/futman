@@ -86,15 +86,10 @@ class CompetitionTest {
 	
 	@Test
 	void test_maxMatches() {
-		assert comp1.getMaxMatchesPerSeason() == 0;
+		assert comp1.getMaxMatchesPerSeason() == 64;
 		assert comp2.getMaxMatchesPerSeason() == 0;
-		assert comp3.getMaxMatchesPerSeason() == 0;
+		assert comp3.getMaxMatchesPerSeason() == 32;
 		assert comp4.getMaxMatchesPerSeason() == 0;
-	}
-	
-	@Test
-	void test_getEmptySeasons() {
-		assert comp1.getSeasons().size() == 0;
 	}
 	
 	@Test
@@ -110,5 +105,18 @@ class CompetitionTest {
 		assert comp1.getTeamCount() == 1;
 		assert comp1.findTeam(team1) == -1;
 		assert comp1.findTeam(team2) == 0;
+	}
+	
+	@Test
+	void test_restartSeason() {
+		assert comp2.getCurrentSeason() == null;
+		
+		assert comp2.startNewSeason();
+		assert comp2.getCurrentSeason() != null;
+		
+		assert comp2.startNextSeason();
+		assert comp2.getCurrentSeason() != null;
+		
+		assert comp2.getSeasons().size() == 2;
 	}
 }
