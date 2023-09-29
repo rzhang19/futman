@@ -195,4 +195,13 @@ class PlayerTest {
 		assert !player2.isOnTeam(team1);
 		assert !player2.isOnTeam(team2);
 	}
+	
+	@Test
+	void test_playerValue() {
+		assert player1.calculateValue();
+		assert player1.getValue() == 0;
+		
+		assert player1.setValue(5000);
+		assert player1.getValue() == 5000;
+	}
 }

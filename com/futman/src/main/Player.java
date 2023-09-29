@@ -82,6 +82,8 @@ public class Player {
    private Team m_team;
    private boolean m_isFreeAgent;
    
+   private long m_value;
+   
    public Player() {
       this("","","",LocalDate.of(1900,1,1));
    }
@@ -335,5 +337,20 @@ public class Player {
 		   return false;
 	   
 	   return m_team.equals(team);
+   }
+   
+   public long getValue() {
+	   return m_value;
+   }
+   
+   public boolean calculateValue() {
+	   m_value = 0;
+	   return true;
+   }
+   
+   // dev only method, only used in tests
+   public boolean setValue(long newValue) {
+	   m_value = newValue;
+	   return true;
    }
 }
