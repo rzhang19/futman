@@ -12,4 +12,8 @@ public class LeagueMatch extends Match {
 	public boolean runMatch() {
 		return super.runMatch();
 	}
+	
+	public boolean processMatch() {
+		return super.processMatch();
+	}
 }
