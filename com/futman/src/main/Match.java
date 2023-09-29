@@ -28,7 +28,7 @@ public abstract class Match {
    protected int m_score2 = 0;
    
    // meta Match runner helpers
-   protected boolean m_finished = false;
+   private boolean m_finished = false;
    private boolean m_processed1 = false;
    private boolean m_processed2 = false;
    
@@ -192,13 +192,14 @@ public abstract class Match {
     	  m_halfMinute = 0;
       }
 	  
-      m_finished = true;
       return true;
    }
    
    public boolean processMatch() {
-      if (!m_finished)
+      if (!m_finished) {
+    	  System.err.println("src.main.Match Error: Match is not finished");
          return false;
+      }
       
       if (m_team1.processMatch(this)) {
          m_processed1 = true;
@@ -240,5 +241,10 @@ public abstract class Match {
       }
       
       return true;
+   }
+   
+   public boolean finishMatch() {
+	   m_finished = true;
+	   return true;
    }
 }

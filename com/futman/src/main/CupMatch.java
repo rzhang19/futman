@@ -120,7 +120,11 @@ public class CupMatch extends Match {
 	    		return false;
 	    }
 	    
-	    m_finished = true;
+	    if (!this.finishMatch()) {
+	    	System.err.println("src.main.CupMatch Error: unable to finish CupMatch");
+	    	return false;
+	    }
+	    
 	    return true;
 	}
 
@@ -128,5 +132,7 @@ public class CupMatch extends Match {
 		return true;
 	}
 	
-	
+	public boolean processMatch() {
+		return super.processMatch();
+	}
 }
