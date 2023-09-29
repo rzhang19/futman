@@ -28,6 +28,7 @@ public abstract class Match {
    protected int m_score2 = 0;
    
    // meta Match runner helpers
+   private boolean m_started = false;
    private boolean m_finished = false;
    private boolean m_processed1 = false;
    private boolean m_processed2 = false;
@@ -38,6 +39,8 @@ public abstract class Match {
    private int m_period = 0;
    protected boolean m_needOvertime;	// default will be false
    protected boolean m_team1Poss;
+   
+   private int m_round;
    
    public Match(Country country) {
       this(new Team("", "", country), new Team("", "", country), country);
@@ -75,6 +78,24 @@ public abstract class Match {
          return m_team1.getName() + " vs " + m_team2.getName();
    }
    
+   public boolean setTeam1(Team team1) {
+	   if (!m_started && !m_finished && m_team1 == null && team1 != null) {
+		   m_team1 = team1;
+		   return true;
+	   }
+		   
+	   return false;
+   }
+   
+   public boolean setTeam2(Team team2) {
+	   if (!m_started && !m_finished && m_team2 == null && team2 != null) {
+		   m_team2 = team2;
+		   return true;
+	   }
+	   
+	   return false;
+   }
+   
    public Team getTeam1() {
       return m_team1;
    }
@@ -92,6 +113,7 @@ public abstract class Match {
    }
    
    public boolean runMatch() {
+	  m_started = true;
       while (m_period < NUM_PERIODS) {
     	  while (m_halfMinute <= PERIOD_LENGTH[m_period]) {
     		  // set proper minutes
@@ -246,5 +268,26 @@ public abstract class Match {
    public boolean finishMatch() {
 	   m_finished = true;
 	   return true;
+   }
+   
+   public int getRound() {
+	   return m_round;
+   }
+   
+   public boolean setRound(int round) {
+	   m_round = round;
+	   return true;
+   }
+   
+   public Team getWinner() {
+	   if (m_score1 > m_score2) {
+		   return m_team1;
+	   }
+	   
+	   else if (m_score2 > m_score1) {
+		   return m_team2;
+	   }
+	   
+	   else return null;
    }
 }
