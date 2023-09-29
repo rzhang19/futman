@@ -1,7 +1,5 @@
 package com.futman.src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,11 +13,13 @@ class LeagueTest {
 	static Country country = new Country("United States", "USA");
 	static League league1;
 	static League league2;
+	static League league3;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		league1 = new League("test", country, 20);
 		league2 = new League("test", country, 18);
+		league3 = new League("test", country, 20, 1);
 	}
 
 	@AfterAll
@@ -35,8 +35,10 @@ class LeagueTest {
 	}
 
 	@Test
-	void test() {
-		assert true;
+	void test_calculateMaxMatches() {
+		assert league1.getMaxMatchesPerSeason() == 38;
+		assert league2.getMaxMatchesPerSeason() == 34;
+		assert league3.getMaxMatchesPerSeason() == 19;
 	}
 
 }

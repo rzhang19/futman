@@ -87,9 +87,9 @@ class CompetitionTest {
 	@Test
 	void test_maxMatches() {
 		assert comp1.getMaxMatchesPerSeason() == 64;
-		assert comp2.getMaxMatchesPerSeason() == 0;
+		assert comp2.getMaxMatchesPerSeason() == 38;
 		assert comp3.getMaxMatchesPerSeason() == 32;
-		assert comp4.getMaxMatchesPerSeason() == 0;
+		assert comp4.getMaxMatchesPerSeason() == 34;
 	}
 	
 	@Test

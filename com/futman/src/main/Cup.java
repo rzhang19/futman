@@ -25,10 +25,15 @@ public class Cup extends Competition {
 
 	@Override
 	protected boolean calculateMaxMatches() {
-		m_maxMatchesSeason = MAX_SIZE * m_elimTimes;
+		if (!m_includeThirdPlace) {
+			if (!this.setMaxMatches(MAX_SIZE * m_elimTimes - 1))
+				return false;
+		}
 		
-		if (!m_includeThirdPlace)
-			m_maxMatchesSeason--;
+		else {
+			if (!this.setMaxMatches(MAX_SIZE * m_elimTimes))
+				return false;
+		}
 		
 		return true;
 	}

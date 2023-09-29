@@ -20,10 +20,10 @@ public abstract class Competition {
    private Country m_country;
 
    protected int MAX_SIZE;	// maximum possible size of the teams
-   private Team[] m_teams;
+   protected Team[] m_teams;
    private int m_teamCount;
    
-   protected int m_maxMatchesSeason; // maximum number of matches per season
+   private int m_maxMatchesSeason; // maximum number of matches per season
    
    private List<Season> m_seasons;
    private int m_seasonCount;
