@@ -2,6 +2,7 @@ package com.futman.src.main;
 
 public class CupMatch extends Match {
 	private int m_overtimePeriod = 0;
+	private CupMatch m_nextCupMatch;
 	
 	public CupMatch(Team team1, Team team2, Country country) {
 		this (team1, team2, country, true);
@@ -9,6 +10,19 @@ public class CupMatch extends Match {
 	
 	public CupMatch(Team team1, Team team2, Country country, boolean needOvertime) {
 		super (team1, team2, country, needOvertime);
+	}
+	
+	public CupMatch(Team team1, Team team2, Country country, boolean needOvertime, CupMatch next) {
+		super(team1, team2, country, needOvertime);
+		m_nextCupMatch = next;
+	}
+	
+	public boolean setTeam1(Team team1) {
+		return super.setTeam1(team1);
+	}
+	
+	public boolean setTeam2(Team team2) {
+		return super.setTeam2(team2);
 	}
 	
 	public boolean runMatch() {
@@ -133,6 +147,27 @@ public class CupMatch extends Match {
 	}
 	
 	public boolean processMatch() {
-		return super.processMatch();
+		if (!super.processMatch()) {
+			System.err.println("src.main.CupMatch Error: unable to process CupMatch");
+			return false;
+		}
+		Team winner = super.getWinner();
+		if (winner == null) {
+			System.err.println("src.main.CupMatch Error: no winner returned in CupMatch");
+			return false;
+		}
+		
+		if (m_nextCupMatch.getTeam1() == null) {
+			return m_nextCupMatch.setTeam1(winner);
+		}
+		
+		else if (m_nextCupMatch.getTeam2() == null) {
+			return m_nextCupMatch.setTeam2(winner);
+		}
+		
+		else {
+			System.err.println("src.main.CupMatch Error: all teams on next cup match already filled");
+			return false;
+		}
 	}
 }
