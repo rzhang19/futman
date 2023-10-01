@@ -108,4 +108,9 @@ class SeasonTest {
 	   assert !season4.getSeasonStarted();
 	   assert season4.getSeasonCompleted();
    }
+   
+   @Test
+   void test_currentRounds() {
+	   assert season1.getCurrentRound() == 1;
+   }
 }
