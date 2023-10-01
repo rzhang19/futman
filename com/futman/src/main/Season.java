@@ -19,6 +19,9 @@ public class Season {
    private boolean m_started;
    private boolean m_completed;
    
+   private int m_currRound;
+   
+   
    public Season(Competition competition) {
       m_id = ID_COUNTER;
       ID_COUNTER++;
@@ -35,6 +38,8 @@ public class Season {
       
       m_started = false;
       m_completed = false;
+      
+      m_currRound = 1;
       
       setYear();
    }
@@ -113,6 +118,18 @@ public class Season {
 	   
 	   m_completed = true;
 	   m_started = false;
+	   return true;
+   }
+   
+   public int getCurrentRound() {
+	   return m_currRound;
+   }
+   
+   public boolean completeCurrentRound () {
+	   return true;
+   }
+   
+   public boolean startNextRound() {
 	   return true;
    }
 }
