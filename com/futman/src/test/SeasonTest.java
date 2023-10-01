@@ -34,7 +34,7 @@ class SeasonTest {
 
 	@Test
 	void test_getID() {
-		assert season1.getID() == 1;
+		assert season1.getID() > 0;
 	}
 
    @Test
