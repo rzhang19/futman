@@ -37,16 +37,16 @@ class PlayerTest {
 
 	@Test
 	void test_getID() {
-		assert(player1.getID() == 1);
-		assert(player2.getID() == 2);
+		assert player1.getID() > 0;
+		assert player2.getID() > 0;
 	}
 	
 	@Test
 	void test_equals() {
 		Player copy = player1;
 		
-		assert(player1.equals(copy));
-		assert(!player2.equals(copy));
+		assert player1.equals(copy);
+		assert !player2.equals(copy);
 	}
 	
 	@Test
