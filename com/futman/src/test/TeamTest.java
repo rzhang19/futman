@@ -85,18 +85,18 @@ class TeamTest {
 		team1.removePlayer(player3);
 		team1.removePlayer(player4);
 		
-		assert team1.getAttOverall() == 0;
-		assert team1.getMidOverall() == 0;
-		assert team1.getDefOverall() == 0;
-		assert team1.getGKOverall() == 0;
-		assert team1.getOverall() == 0;
+		assert team1.getAttOverall() == 1;
+		assert team1.getMidOverall() == 1;
+		assert team1.getDefOverall() == 1;
+		assert team1.getGKOverall() == 1;
+		assert team1.getOverall() == 1;
 		
 		team1.addPlayer(player1);
 		
 		assert team1.getAttOverall() == 80;
-		assert team1.getMidOverall() == 0;
-		assert team1.getDefOverall() == 0;
-		assert team1.getGKOverall() == 0;
+		assert team1.getMidOverall() == 1;
+		assert team1.getDefOverall() == 1;
+		assert team1.getGKOverall() == 1;
 	}
 	
 	@Test
@@ -142,5 +142,11 @@ class TeamTest {
 		assert team1.getSeasonGoals() == 5;
 		assert team1.resetGoals();
 		assert team1.getSeasonGoals() == 0;
+	}
+	
+	@Test
+	void test_valid() {
+		assert team1.isValid();
+		assert team2.isValid();
 	}
 }

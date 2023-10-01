@@ -19,11 +19,11 @@ public class Team {
    private int m_seasonGoals = 0;
    
    // Attribute values
-   private int m_attOverall = 0;
-   private int m_midOverall = 0;
-   private int m_defOverall = 0;
-   private int m_gkOverall = 0;
-   private int m_overall = 0;
+   private int m_attOverall = 1;
+   private int m_midOverall = 1;
+   private int m_defOverall = 1;
+   private int m_gkOverall = 1;
+   private int m_overall = 1;
    
    // Players
    private Player[] m_players = new Player[MAX_PLAYERS];
@@ -144,7 +144,7 @@ public class Team {
 		   }
 	   }
 	   
-	   m_attOverall = count == 0 ? 0 : sum / count;
+	   m_attOverall = count == 0 ? 1 : sum / count;
 	   
 	   return true;
    }
@@ -160,7 +160,7 @@ public class Team {
 		   }
 	   }
 	   
-	   m_midOverall = count == 0 ? 0 : sum / count;
+	   m_midOverall = count == 0 ? 1 : sum / count;
 	   
 	   return true;
    }
@@ -176,7 +176,7 @@ public class Team {
 		   }
 	   }
 	   
-	   m_defOverall = count == 0 ? 0 : sum / count;
+	   m_defOverall = count == 0 ? 1 : sum / count;
 	   
 	   return true;
    }
@@ -192,7 +192,7 @@ public class Team {
 		   }
 	   }
 	   
-	   m_gkOverall = count == 0 ? 0 : sum / count;
+	   m_gkOverall = count == 0 ? 1 : sum / count;
 	   
 	   return true;
    }
@@ -303,5 +303,94 @@ public class Team {
       m_playerCount--;
       
       return true;
+   }
+   
+   public boolean isValid() {
+	   if (m_longName.length() <= 0) {
+		   System.err.println("src.main.Team Error: Team long name cannot be empty");
+		   return false;
+	   }
+	   
+	   if (!(m_shortName.length() == 2 || m_shortName.length() == 3)) {
+		   System.err.println("src.main.Team Error: Team short name must be two or three characters");
+		   return false;
+	   }
+	   
+	   if (m_country == null) {
+		   System.err.println("src.main.Team Error: Team must contain a country");
+		   return false;
+	   }
+	   
+	   if (m_seasonWins < 0) {
+		   System.err.println("src.main.Team Error: Team season wins must be non-negative");
+		   return false;
+	   }
+	   
+	   if (m_seasonDraws < 0) {
+		   System.err.println("src.main.Team Error: Team season draws must be non-negative");
+		   return false;
+	   }
+	   
+	   if (m_seasonLosses < 0) {
+		   System.err.println("src.main.Team Error: Team season losses must be non-negative");
+		   return false;
+	   }
+	   
+	   if (m_seasonGoals < 0) {
+		   System.err.println("src.main.Team Error: Team season goals must be non-negative");
+		   return false;
+	   }
+	   
+	   if (m_attOverall < 1 || m_attOverall > 99) {
+		   System.err.println("src.main.Team Error: Team attack overall must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_midOverall < 1 || m_midOverall > 99) {
+		   System.err.println("src.main.Team Error: Team midfield overall must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_defOverall < 1 || m_defOverall > 99) {
+		   System.err.println("src.main.Team Error: Team defense overall must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_gkOverall < 1 || m_gkOverall > 99) {
+		   System.err.println("src.main.Team Error: Team gk overall must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_overall < 1 || m_overall > 99) {
+		   System.err.println("src.main.Team Error: Team overall must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_players == null) {
+		   System.err.println("src.main.Team Error: Player array cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_playerCount < 0) {
+		   System.err.println("src.main.Team Error: m_playerCount must be non-negative");
+		   return false;
+	   }
+	   
+	   int x = 0;
+	   for (; x < m_playerCount; x++) {
+		   if (m_players[x] == null) {
+			   System.err.println("src.main.Team Error: Player at index " + x + " is null");
+			   return false;
+		   }
+	   }
+	   
+	   for (; x < MAX_PLAYERS; x++) {
+		   if (m_players[x] != null) {
+			   System.err.println("src.main.Team Error: non-null Player past count, at index " + x);
+			   return false;
+		   }
+	   }
+	   
+	   return true;
    }
 }
