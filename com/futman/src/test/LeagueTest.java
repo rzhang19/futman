@@ -17,9 +17,9 @@ class LeagueTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		league1 = new League("test", country, 20);
-		league2 = new League("test", country, 18);
-		league3 = new League("test", country, 20, 1);
+		league1 = new League("test", country, 1, 20);
+		league2 = new League("test", country, 1, 18);
+		league3 = new League("test", country, 1, 20, 1);
 	}
 
 	@AfterAll

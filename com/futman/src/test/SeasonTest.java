@@ -1,7 +1,5 @@
 package com.futman.src.test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,7 +28,7 @@ class SeasonTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		comp = new League("Test League", country, 4);
+		comp = new League("Test League", country, 1, 4);
 		
 		teams[0] = new Team("Team 1", "T1", country);
 		teams[1] = new Team("Team 2", "T2", country);
@@ -41,6 +39,11 @@ class SeasonTest {
 		assert comp.addTeam(teams[1]);
 		assert comp.addTeam(teams[2]);
 		assert comp.addTeam(teams[3]);
+		
+		assert teams[0].addLeague(comp);
+		assert teams[1].addLeague(comp);
+		assert teams[2].addLeague(comp);
+		assert teams[3].addLeague(comp);
 		
 		season1 = new Season(comp);
 	}
