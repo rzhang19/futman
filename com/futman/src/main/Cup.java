@@ -37,4 +37,9 @@ public class Cup extends Competition {
 		
 		return true;
 	}
+	
+	@Override
+	protected int getFaceTimes() {
+		return 0;
+	}
 }

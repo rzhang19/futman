@@ -109,6 +109,20 @@ public abstract class Competition {
       return true;
    }
    
+   public boolean addTeam(Team team) {
+	   if (findTeam(team) < 0 && m_teamCount < MAX_SIZE) {
+		   m_teams[m_teamCount] = team;
+		   m_teamCount++;
+	   }
+	   
+	   else {
+		   System.err.println("src.main.Competition Error: couldn't add team");
+		   return false;
+	   }
+	   
+	   return true;
+   }
+   
    public boolean removeTeam(Team team) {
       int index = findTeam(team);
       
@@ -218,4 +232,6 @@ public abstract class Competition {
 	   
 	   return true;
    }
+
+protected abstract int getFaceTimes();
 }

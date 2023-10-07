@@ -36,9 +36,9 @@ class LeagueTest {
 
 	@Test
 	void test_calculateMaxMatches() {
-		assert league1.getMaxMatchesPerSeason() == 38;
-		assert league2.getMaxMatchesPerSeason() == 34;
-		assert league3.getMaxMatchesPerSeason() == 19;
+		assert league1.getMaxMatchesPerSeason() == 380;
+		assert league2.getMaxMatchesPerSeason() == 306;
+		assert league3.getMaxMatchesPerSeason() == 190;
 	}
 
 }

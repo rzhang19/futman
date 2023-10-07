@@ -1,5 +1,7 @@
 package com.futman.src.test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,11 +12,13 @@ import com.futman.src.main.League;
 import com.futman.src.main.Season;
 import com.futman.src.main.Competition;
 import com.futman.src.main.Country;
+import com.futman.src.main.Team;
 
 class SeasonTest {
    static Country country = new Country("United States", "USA");
-   static Competition comp = new League("Test League", country);
-   static Season season1 = new Season(comp);
+   static Competition comp;;
+   static Season season1;
+   static Team[] teams = new Team[4];
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -26,6 +30,19 @@ class SeasonTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		comp = new League("Test League", country, 4);
+		
+		teams[0] = new Team("Team 1", "T1", country);
+		teams[1] = new Team("Team 2", "T2", country);
+		teams[2] = new Team("Team 3", "T3", country);
+		teams[3] = new Team("Team 4", "T4", country);
+		
+		assert comp.addTeam(teams[0]);
+		assert comp.addTeam(teams[1]);
+		assert comp.addTeam(teams[2]);
+		assert comp.addTeam(teams[3]);
+		
+		season1 = new Season(comp);
 	}
 
 	@AfterEach
@@ -54,15 +71,9 @@ class SeasonTest {
    }
    
    @Test
-   void test_emptyTeams() {
-	   assert season1.getTeams()[0] == null;
-	   assert season1.getTeamsCount() == 0;
-   }
-   
-   @Test
    void test_emptyMatches() {
-	   assert season1.getMatches().length == 0 || season1.getMatches()[0] == null;
-	   assert season1.getMatchesCount() == 0;
+	   assert season1.getMatches().length == 6 || season1.getMatches()[0] != null;
+	   assert season1.getMatchesCount() == 12;
    }
    
    @Test

@@ -28,9 +28,13 @@ public class League extends Competition{
 		if (m_faceTimes <= 0)
 			return false;
 		
-		if (!this.setMaxMatches((m_teams.length - 1) * m_faceTimes))
+		if (!this.setMaxMatches((m_teams.length - 1) * m_faceTimes * m_teams.length / 2))
 			return false;
 		
 		return true;
+	}
+	
+	public int getFaceTimes() {
+		return m_faceTimes;
 	}
 }
