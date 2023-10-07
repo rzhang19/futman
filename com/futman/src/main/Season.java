@@ -327,18 +327,29 @@ public class Season {
 	   
 	   boolean[] selected = new boolean[m_currTeamsCount];
 	   
+	   int firstTiers = numFirstTiers();
+	   int nonSelected = m_currTeamsCount;
+	   
+	   if (firstTiers <= 0) {
+		   System.err.println("src.main.Season Error: no first tier Teams");
+		   return false;
+	   }
+	   
 	   // first round selections
 	   while (matchCounter < firstRounds) {
 		   int team1 = rand.nextInt(m_currTeamsCount);
-		   while (selected[team1])
+		   while (selected[team1] || (nonSelected > firstTiers && m_teams[team1].getLeague().getTier() == 1)) {
 			   team1 = rand.nextInt(m_currTeamsCount);
+		   }
 		   
 		   int team2 = rand.nextInt(m_currTeamsCount);
-		   while (selected[team2])
+		   while (selected[team2] || (nonSelected > firstTiers && m_teams[team2].getLeague().getTier() == 1)) {
 			   team2 = rand.nextInt(m_currTeamsCount);
+		   }
 		   
 		   m_matches[matchCounter] = new CupMatch(m_teams[team1], m_teams[team2], m_competition.getCountry());
 		   m_currMatchCount++;
+		   nonSelected--;
 		   
 		   selected[team1] = true;
 		   selected[team2] = true;
@@ -377,5 +388,22 @@ public class Season {
 		   return power / 2;
 	   else
 		   return 0;
+   }
+   
+   private int numFirstTiers() {
+	   if (!(m_competition instanceof Cup)) {
+		   System.err.println("src.main.Season Error: can't check num of first tiers for non-Cup");
+		   return -1;
+	   }
+	   
+	   int count = 0;
+	   
+	   for (int x = 0; x < m_currTeamsCount; x++) {
+		   if (m_teams[x].getLeague().getTier() == 1) {
+			   count++;
+		   }
+	   }
+	   
+	   return count;
    }
 }

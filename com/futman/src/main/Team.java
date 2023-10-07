@@ -11,6 +11,7 @@ public class Team {
    private String m_longName;
    private String m_shortName;
    private Country m_country;
+   private League m_league;
    
    // Seasonal values
    private int m_seasonWins = 0;
@@ -57,6 +58,20 @@ public class Team {
    
    public String getShortName() {
       return m_shortName;
+   }
+   
+   public boolean addLeague(Competition league) {
+	   if (!(league instanceof League)) {
+		   System.err.println("src.main.Team Error: can't add a non-League to m_competition");
+		   return false;
+	   }
+	   
+	   m_league = (League) league;
+	   return true;
+   }
+   
+   public League getLeague() {
+	   return m_league;
    }
    
    public int getSeasonWins() {

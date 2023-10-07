@@ -15,9 +15,9 @@ import com.futman.src.main.Team;
 class CompetitionTest {
 	static Country country = new Country("United States", "USA");
 	static Competition comp1 = new Cup("cup1", country, 64);
-	static Competition comp2 = new League("league1", country, 20);
+	static Competition comp2 = new League("league1", country, 1, 20);
 	static Competition comp3 = new Cup("cup2", country, 32);
-	static Competition comp4 = new League("league2", country, 18);
+	static Competition comp4 = new League("league2", country, 1, 18);
 	static Team team1 = new Team("test1", "TE", country);
 	static Team team2 = new Team("test2", "TE2", country);
 

@@ -233,5 +233,5 @@ public abstract class Competition {
 	   return true;
    }
 
-protected abstract int getFaceTimes();
+   protected abstract int getFaceTimes();
 }
