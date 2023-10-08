@@ -40,4 +40,18 @@ public class League extends Competition{
 	public int getTier() {
 		return m_tier;
 	}
+	
+	public boolean isValid() {
+		if (m_faceTimes <= 0) {
+			System.err.println("src.main.League Error: must play each team at least once");
+			return false;
+		}
+		
+		if (m_tier <= 0) {
+			System.err.println("src.main.League Error: tier must be positive");
+			return false;
+		}
+		
+		return true;
+	}
 }

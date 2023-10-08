@@ -40,5 +40,17 @@ class LeagueTest {
 		assert league2.getMaxMatchesPerSeason() == 306;
 		assert league3.getMaxMatchesPerSeason() == 190;
 	}
-
+	
+	@Test
+	void test_isValid() {
+		assert league1.isValid();
+		assert league2.isValid();
+		assert league3.isValid();
+		
+		League league4 = new League("invalid league", country, -1, 20, 1);
+		assert !(league4.isValid());
+		
+		League league5 = new League("invalid league 2", country, 1, 20, -1);
+		assert !(league5.isValid());
+	}
 }
