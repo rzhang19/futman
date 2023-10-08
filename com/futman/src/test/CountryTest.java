@@ -59,4 +59,15 @@ class CountryTest {
 		assert country1.getCode().equals("USA");
 		assert country2.getCode().equals("CAN");
 	}
+	
+	@Test
+	void test_isValid() {
+		assert country1.isValid();
+		
+		Country country3 = new Country("", "US");
+		assert !(country3.isValid());
+		
+		Country country4 = new Country("Test", "T");
+		assert !(country4.isValid());
+	}
 }
