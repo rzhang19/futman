@@ -37,4 +37,18 @@ public class Country {
    public String getCode() {
       return m_code;
    }
+   
+   public boolean isValid() {
+	   if (m_name.length() <= 0) {
+		   System.err.println("src.main.Country Error: invalid Country long name");
+		   return false;
+	   }
+	   
+	   if (m_code.length() < 2 || m_code.length() > 3) {
+		   System.err.println("src.main.Country Error: invalid Country code");
+		   return false;
+	   }
+	   
+	   return true;
+   }
 }
