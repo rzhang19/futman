@@ -42,4 +42,8 @@ public class Cup extends Competition {
 	protected int getFaceTimes() {
 		return 0;
 	}
+	
+	public boolean isValid() {
+		return m_elimTimes > 0;
+	}
 }

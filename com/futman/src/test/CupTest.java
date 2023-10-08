@@ -40,4 +40,14 @@ class CupTest {
 		assert cup2.getMaxMatchesPerSeason() == 40;
 		assert cup3.getMaxMatchesPerSeason() == 63;
 	}
+	
+	@Test
+	void test_isValid() {
+		assert cup1.isValid();
+		assert cup2.isValid();
+		assert cup3.isValid();
+		
+		Cup cup4 = new Cup("another test", country, 1, -1, false);
+		assert !(cup4.isValid());
+	}
 }
