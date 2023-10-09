@@ -290,4 +290,53 @@ public abstract class Match {
 	   
 	   else return null;
    }
+   
+   public boolean isValid() {
+	   if (m_country == null) {
+		   System.err.println("src.main.Match Error: country cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_team1 == null) {
+		   System.err.println("src.main.Match Error: team 1 cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_team2 == null) {
+		   System.err.println("src.main.Match Error: team 2 cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_score1 < 0) {
+		   System.err.println("src.main.Match Error: score 1 cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_score2 < 0) {
+		   System.err.println("src.main.Match Error: score 2 cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_halfMinute < 0 || m_halfMinute > 45) {
+		   System.err.println("src.main.Match Error: half minute must be between 0 and 45");
+		   return false;
+	   }
+	   
+	   if (m_minute < 0 || m_minute > 90) {
+		   System.err.println("src.main.Match Error: minute must be between 0 and 90");
+		   return false;
+	   }
+	   
+	   if (m_period != 0 && m_period != 1) {
+		   System.err.println("src.main.Match Error: period must be zero or one");
+		   return false;
+	   }
+	   
+	   if (m_round < 0) {
+		   System.err.println("src.main.Match Error: round cannot be negative");
+		   return false;
+	   }
+	   
+	   return true;
+   }
 }

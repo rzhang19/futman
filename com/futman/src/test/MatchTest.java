@@ -73,4 +73,19 @@ class MatchTest {
 		assert match2.getScore1() == 0;
 		assert match2.getScore2() == 0;
 	}
+	
+	@Test
+	void test_isValid() {
+		assert match1.isValid();
+		assert match2.isValid();
+		
+		Match match3 = new LeagueMatch(team1, team2, null);
+		assert !(match3.isValid());
+		
+		Match match4 = new LeagueMatch(team1, null, country);
+		assert !(match4.isValid());
+		
+		Match match5 = new LeagueMatch(null, team2, country);
+		assert !(match5.isValid());
+	}
 }
