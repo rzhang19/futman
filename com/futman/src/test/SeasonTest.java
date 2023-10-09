@@ -127,4 +127,12 @@ class SeasonTest {
    void test_currentRounds() {
 	   assert season1.getCurrentRound() == 1;
    }
+   
+   @Test
+   void test_isValid() {
+	   assert season1.isValid();
+	   
+	   Season season5 = new Season(null);
+	   assert !(season5.isValid());
+   }
 }

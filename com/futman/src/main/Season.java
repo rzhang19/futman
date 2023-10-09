@@ -33,11 +33,19 @@ public class Season {
       
       m_competition = competition;
       
-      m_maxTeamsCount = competition.getMaxSize();
+      if (competition == null) {
+    	  m_maxTeamsCount = 0;
+    	  m_maxMatchCount = 0;
+      }
+      
+      else {
+    	  m_maxTeamsCount = competition.getMaxSize();
+    	  m_maxMatchCount = competition.getMaxMatchesPerSeason();
+      }
+      
       m_teams = new Team[m_maxTeamsCount];
       m_currTeamsCount = 0;
       
-      m_maxMatchCount = competition.getMaxMatchesPerSeason();
       m_matches = new Match[m_maxMatchCount];
       m_currMatchCount = 0;
       
@@ -74,6 +82,11 @@ public class Season {
    }
    
    private boolean setYear() {
+	   if (m_competition == null) {
+		   System.err.println("src.main.Season Error: competition cannot be null");
+		   return false;
+	   }
+	   
 	   m_year = m_competition.getYear();
 	   return true;
    }
@@ -147,6 +160,11 @@ public class Season {
    }
    
    private boolean fetchTeams() {
+	   if (m_competition == null) {
+		   System.err.println("src.main.Season Error: competition cannot be null");
+		   return false;
+	   }
+	   
 	   m_currTeamsCount = 0;
 	   
 	   for (int x = 0; x < m_maxTeamsCount; x++) {
@@ -158,6 +176,11 @@ public class Season {
    }
    
    private boolean seed() {
+	   if (m_competition == null) {
+		   System.err.println("src.main.Season Error: competition cannot be null");
+		   return false;
+	   }
+	   
 	   if (m_competition instanceof League) {
 		   if (!generateAllMatches()) {
 			   System.err.println("src.main.Season Error: Unable to generate all matches for League");
@@ -405,5 +428,49 @@ public class Season {
 	   }
 	   
 	   return count;
+   }
+   
+   public boolean isValid() {
+	   if (m_competition == null) {
+		   System.err.println("src.main.Season Error: competition cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_year < 2000) {
+		   System.err.println("src.main.Season Error: year must be 2000 or after");
+		   return false;
+	   }
+	   
+	   if (m_teams == null) {
+		   System.err.println("src.main.Season Error: team cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_currTeamsCount < 0) {
+		   System.err.println("src.main.Season Error: team count cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_maxTeamsCount <= 0) {
+		   System.err.println("src.main.Season Error: max team count must be positive");
+		   return false;
+	   }
+	   
+	   if (m_matches == null) {
+		   System.err.println("src.main.Season Error: matches cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_currMatchCount < 0) {
+		   System.err.println("src.main.Season Error: match count cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_maxMatchCount <= 0) {
+		   System.err.println("src.main.Season Error: max match count must be positive");
+		   return false;
+	   }
+	   
+	   return true;
    }
 }
