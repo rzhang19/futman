@@ -44,6 +44,10 @@ public class Cup extends Competition {
 	}
 	
 	public boolean isValid() {
+		if (!(super.isValid())) {
+			return false;
+		}
+		
 		return m_elimTimes > 0;
 	}
 }

@@ -119,4 +119,21 @@ class CompetitionTest {
 		
 		assert comp2.getSeasons().size() == 2;
 	}*/
+	
+	@Test
+	void test_isValid() {
+		assert comp1.isValid();
+		assert comp2.isValid();
+		assert comp3.isValid();
+		assert comp4.isValid();
+		
+		Competition comp5 = new League("", country, 1);
+		assert !(comp5.isValid());
+		
+		Competition comp6 = new League("test league", null, 1);
+		assert !(comp6.isValid());
+		
+		Competition comp7 = new League("test league 2", country, -1);
+		assert !(comp7.isValid());
+	}
 }

@@ -234,4 +234,57 @@ public abstract class Competition {
    }
 
    protected abstract int getFaceTimes();
+   
+   public boolean isValid() {
+	   if (m_name.length() <= 0) {
+		   System.err.println("src.main.Competition Error: name cannot be empty");
+		   return false;
+	   }
+	   
+	   if (m_country == null) {
+		   System.err.println("src.main.Competition Error: country cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_teams == null) {
+		   System.err.println("src.main.Competition Error: teams cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_teamCount < 0) {
+		   System.err.println("src.main.Competition Error: team count cannot be negative");
+		   return false;
+	   }
+	   
+	   for (int x = 0; x < m_teamCount; x++) {
+		   if (m_teams[x] == null) {
+			   System.err.println("src.main.Competition Error: team at index " + x + " cannot be null");
+			   return false;
+		   }
+	   }
+	   
+	   for (int x = m_teamCount; x < MAX_SIZE; x++) {
+		   if (m_teams[x] != null) {
+			   System.err.println("src.main.Competition Error: team at index " + x + " must be null, after current team size");
+			   return false;
+		   }
+	   }
+	   
+	   if (m_maxMatchesSeason < 0) {
+		   System.err.println("src.main.Competition Error: max matches cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_seasons == null) {
+		   System.err.println("src.main.Competition Error: seasons cannot be null");
+		   return false;
+	   }
+	   
+	   if (m_seasonCount < 0) {
+		   System.err.println("src.main.Competition Error: season count cannot be negative");
+		   return false;
+	   }
+	   
+	   return true;
+   }
 }
