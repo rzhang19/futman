@@ -42,6 +42,10 @@ public class League extends Competition{
 	}
 	
 	public boolean isValid() {
+		if (!(super.isValid())) {
+			return false;
+		}
+		
 		if (m_faceTimes <= 0) {
 			System.err.println("src.main.League Error: must play each team at least once");
 			return false;
