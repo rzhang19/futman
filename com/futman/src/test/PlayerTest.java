@@ -204,4 +204,13 @@ class PlayerTest {
 		assert player1.setValue(5000);
 		assert player1.getValue() == 5000;
 	}
+	
+	@Test
+	void test_isValid() {
+		Team team3 = new Team("Test", "TE", new Country("United States", "USA"));
+		assert team3.addPlayer(player3);
+		assert player1.isValid();
+		assert player2.isValid();
+		assert !(player3.isValid());
+	}
 }
