@@ -319,6 +319,7 @@ public class Player {
    public boolean addToTeam(Team team) {
 	   if (m_isFreeAgent) {
 		   m_team = team;
+		   m_isFreeAgent = false;
 		   return true;
 	   }
 	   
@@ -331,7 +332,7 @@ public class Player {
    }
    
    public boolean isOnTeam(Team team) {
-	   if (!m_isFreeAgent)
+	   if (m_isFreeAgent)
 		   return false;
 	   if (m_team == null)
 		   return false;
@@ -351,6 +352,80 @@ public class Player {
    // dev only method, only used in tests
    public boolean setValue(long newValue) {
 	   m_value = newValue;
+	   return true;
+   }
+   
+   public boolean isValid() {
+	   if (m_position != Position.ATT && m_position != Position.MID && m_position != Position.DEF && m_position != Position.GK && m_position != Position.NONE) {
+		   System.err.println("src.main.Player Error: position is not valid");
+		   return false;
+	   }
+	   
+	   if (m_seasonGoals < 0) {
+		   System.err.println("src.main.Player Error: season goals cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_seasonAssists < 0) {
+		   System.err.println("src.main.Player Error: season assists cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_seasonSaves < 0) {
+		   System.err.println("src.main.Player Error: season saves cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_seasonTackles < 0) {
+		   System.err.println("src.main.Player Error: season tackles cannot be negative");
+		   return false;
+	   }
+	   
+	   if (m_overall < 1 || m_overall > 99) {
+		   System.err.println("src.main.Player Error: overall must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_speed < 1 || m_speed > 99) {
+		   System.err.println("src.main.Player Error: speed must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_shooting < 1 || m_shooting > 99) {
+		   System.err.println("src.main.Player Error: shooting must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_tackling < 1 || m_tackling > 99) {
+		   System.err.println("src.main.Player Error: tackling must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_passing < 1 || m_passing > 99) {
+		   System.err.println("src.main.Player Error: passing must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_reactions < 1 || m_reactions > 99) {
+		   System.err.println("src.main.Player Error: reaction must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_blocking < 1 || m_blocking > 99) {
+		   System.err.println("src.main.Player Error: blocking must be between 1 and 99 inclusive");
+		   return false;
+	   }
+	   
+	   if (m_team != null && m_isFreeAgent) {
+		   System.err.println("src.main.Player Error: player cannot have a team and be a free agent");
+		   return false;
+	   }
+	   
+	   if (m_team == null && !m_isFreeAgent) {
+		   System.err.println("src.main.Player Error: team cannot be null and player cannot be a free agent");
+		   return false;
+	   }
+	   
 	   return true;
    }
 }
