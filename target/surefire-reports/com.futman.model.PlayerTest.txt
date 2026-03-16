@@ -1,11 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.futman.model.PlayerTest
 -------------------------------------------------------------------------------
-Tests run: 26, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.019 s <<< FAILURE! -- in com.futman.model.PlayerTest
-com.futman.model.PlayerTest.test_isValid -- Time elapsed: 0.004 s <<< FAILURE!
-java.lang.AssertionError
-	at com.futman.model.PlayerTest.test_isValid(PlayerTest.java:210)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:564)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
+Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.futman.model.PlayerTest
