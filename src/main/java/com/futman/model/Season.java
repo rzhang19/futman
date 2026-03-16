@@ -1,0 +1,474 @@
+package com.futman.model;
+
+import java.util.Random;
+
+public class Season {
+    private static Random rand = new Random();
+
+    private static int ID_COUNTER = 1;
+
+    private int m_id;
+    private Competition m_competition;
+    private int m_year;
+
+    private Team[] m_teams;
+    private int m_currTeamsCount;
+    private int m_maxTeamsCount;
+
+    private Match[] m_matches;
+    private int m_maxMatchCount;
+    private int m_currMatchCount;
+
+    private boolean m_started;
+    private boolean m_completed;
+
+    private int m_currRound;
+
+    public Season(Competition competition) {
+        m_id = ID_COUNTER;
+        ID_COUNTER++;
+
+        m_competition = competition;
+
+        if (competition == null) {
+            m_maxTeamsCount = 0;
+            m_maxMatchCount = 0;
+        } else {
+            m_maxTeamsCount = competition.getMaxSize();
+            m_maxMatchCount = competition.getMaxMatchesPerSeason();
+        }
+
+        m_teams = new Team[m_maxTeamsCount];
+        m_currTeamsCount = 0;
+
+        m_matches = new Match[m_maxMatchCount];
+        m_currMatchCount = 0;
+
+        m_started = false;
+        m_completed = false;
+
+        m_currRound = 1;
+
+        setYear();
+
+        if (!fetchTeams()) {
+            System.err.println("model.Season Error: error fetching teams from Competition");
+        }
+
+        if (!seed()) {
+            System.err.println("model.Season Error: error seeding new Season");
+        }
+    }
+
+    public boolean equals(Season other) {
+        return m_id == other.getID();
+    }
+
+    public String toString() {
+        return m_competition.getName() + " (" + m_year + ")";
+    }
+
+    public int getID() {
+        return m_id;
+    }
+
+    public void setID(int id) {
+        m_id = id;
+    }
+
+    public Competition getCompetition() {
+        return m_competition;
+    }
+
+    public int getYear() {
+        return m_year;
+    }
+
+    private boolean setYear() {
+        if (m_competition == null) {
+            System.err.println("model.Season Error: competition cannot be null");
+            return false;
+        }
+
+        m_year = m_competition.getYear();
+        return true;
+    }
+
+    public Team[] getTeams() {
+        return m_teams;
+    }
+
+    public Match[] getMatches() {
+        return m_matches;
+    }
+
+    public int getTeamsCount() {
+        return m_currTeamsCount;
+    }
+
+    public int getMatchesCount() {
+        return m_currMatchCount;
+    }
+
+    public boolean getSeasonStarted() {
+        return m_started;
+    }
+
+    public boolean getSeasonCompleted() {
+        return m_completed;
+    }
+
+    public boolean startSeason() {
+        if (!setYear()) {
+            System.err.println("model.Season Error: unable to set year");
+            return false;
+        }
+
+        if (m_completed) {
+            System.err.println("model.Season Error: season already completed");
+            return false;
+        }
+
+        if (m_started) {
+            System.err.println("model.Season Error: season already started");
+            return false;
+        }
+
+        m_started = true;
+        return true;
+    }
+
+    public boolean completeSeason() {
+        if (!m_started)
+            return false;
+
+        if (m_completed)
+            return false;
+
+        m_completed = true;
+        m_started = false;
+        return true;
+    }
+
+    public int getCurrentRound() {
+        return m_currRound;
+    }
+
+    public boolean completeCurrentRound() {
+        return true;
+    }
+
+    public boolean startNextRound() {
+        return true;
+    }
+
+    private boolean fetchTeams() {
+        if (m_competition == null) {
+            System.err.println("model.Season Error: competition cannot be null");
+            return false;
+        }
+
+        m_currTeamsCount = 0;
+
+        for (int x = 0; x < m_maxTeamsCount; x++) {
+            m_teams[x] = m_competition.getTeams()[x];
+            m_currTeamsCount++;
+        }
+
+        return true;
+    }
+
+    private boolean seed() {
+        if (m_competition == null) {
+            System.err.println("model.Season Error: competition cannot be null");
+            return false;
+        }
+
+        if (m_competition instanceof League) {
+            if (!generateAllMatches()) {
+                System.err.println("model.Season Error: Unable to generate all matches for League");
+                return false;
+            }
+
+            return true;
+        }
+
+        if (m_competition instanceof Cup) {
+            if (!generateFirstRound()) {
+                System.err.println("model.Season Error: unable to generate first round");
+                return false;
+            }
+
+            return true;
+        }
+
+        System.err.println("model.Season Error: invalid competition type");
+        return false;
+    }
+
+    private boolean generateAllMatches() {
+        Match[][] orderedMatches = getOrderedMatches();
+
+        if (orderedMatches == null) {
+            return false;
+        }
+
+        int matchNum = 0;
+
+        int completed = 0;
+
+        for (int timesPlay = 0; timesPlay < m_competition.getFaceTimes(); timesPlay++) {
+            completed = 0;
+            boolean[] selected = new boolean[m_currTeamsCount - 1];
+
+            while (completed < m_currTeamsCount - 1) {
+                int selection = rand.nextInt(m_currTeamsCount - 1);
+
+                while (selected[selection]) {
+                    selection = rand.nextInt(m_currTeamsCount - 1);
+                }
+
+                selected[selection] = true;
+
+                for (int x = 0; x < m_currTeamsCount / 2; x++) {
+                    if (m_matches[matchNum] != null) {
+                        System.err.println("model.Season Error: match at index is not null");
+                        return false;
+                    }
+
+                    if (orderedMatches[((timesPlay + 1) * (selection + 1)) - 1][x] == null) {
+                        System.err.println("model.Season Error: match selected is null");
+                        return false;
+                    }
+
+                    if (orderedMatches[((timesPlay + 1) * (selection + 1)) - 1][x].getTeam1() == null) {
+                        System.err.println("model.Season Error: match added has null Team 1");
+                        return false;
+                    }
+
+                    if (orderedMatches[((timesPlay + 1) * (selection + 1)) - 1][x].getTeam2() == null) {
+                        System.err.println("model.Season Error: match added has null Team 2");
+                    }
+
+                    m_matches[matchNum] = orderedMatches[((timesPlay + 1) * (selection + 1)) - 1][x];
+                    m_currMatchCount++;
+                    matchNum++;
+                }
+
+                completed++;
+            }
+        }
+
+        return true;
+    }
+
+    private Match[][] getOrderedMatches() {
+        if (!(m_competition instanceof League)) {
+            System.err.println("model.Season Error: can't generate schedule for non League");
+            return null;
+        }
+
+        if (m_currTeamsCount <= 0) {
+            System.err.println("model.Season Error: need at least one team to seed League");
+            return null;
+        }
+
+        int weeks = (m_currTeamsCount - 1) * m_competition.getFaceTimes();
+        int matches = m_currTeamsCount / 2;
+
+        Team[] rotation = new Team[m_maxTeamsCount % 2 == 0 ? m_maxTeamsCount : m_maxTeamsCount + 1];
+        int rotNum;
+
+        for (int x = 0; x < m_maxTeamsCount; x++) {
+            rotation[x] = m_teams[x];
+        }
+
+        Match[][] matchesPerWeek = new Match[weeks][matches];
+
+        for (int x = 0; x < weeks; x++) {
+            rotNum = 0;
+            for (int y = 0; y < matches; y++) {
+                if (matchesPerWeek[x][y] != null) {
+                    System.err.println("model.Season Error: team already exists at " + x + ", " + y);
+                    return null;
+                }
+
+                if (rotation[rotNum] != null && rotation[rotNum + 1] != null) {
+                    matchesPerWeek[x][y] = new LeagueMatch(rotation[rotNum], rotation[rotNum + 1],
+                            m_competition.getCountry());
+                    rotNum += 2;
+                }
+            }
+
+            rotation = rotate(rotation);
+
+            if (rotation == null) {
+                System.err.println("model.Season Error: rotation is null");
+                return null;
+            }
+        }
+
+        return matchesPerWeek;
+    }
+
+    private Team[] rotate(Team[] oldRotation) {
+        Team[] newRotation = new Team[m_maxTeamsCount % 2 == 0 ? m_maxTeamsCount : m_maxTeamsCount + 1];
+        if (oldRotation.length <= 2) {
+            return oldRotation;
+        }
+
+        if (oldRotation[0] == null) {
+            System.err.println("model.Season Error: team at index 1 is null");
+            return null;
+        }
+
+        newRotation[0] = oldRotation[0];
+        Team hold = oldRotation[1];
+
+        int x;
+
+        for (x = 1; x + 2 < newRotation.length; x += 2) {
+            newRotation[x] = oldRotation[x + 2];
+        }
+
+        newRotation[x] = oldRotation[x - 1];
+
+        for (x = x - 1; x > 2; x -= 2) {
+            newRotation[x] = oldRotation[x - 2];
+        }
+
+        newRotation[2] = hold;
+
+        return newRotation;
+    }
+
+    private boolean generateFirstRound() {
+        int byes = getLowerPowerOf2(m_currTeamsCount);
+        int firstRounds = m_currTeamsCount - byes;
+
+        int matchCounter = 0;
+
+        boolean[] selected = new boolean[m_currTeamsCount];
+
+        int firstTiers = numFirstTiers();
+        int nonSelected = m_currTeamsCount;
+
+        if (firstTiers <= 0) {
+            System.err.println("model.Season Error: no first tier Teams");
+            return false;
+        }
+
+        while (matchCounter < firstRounds) {
+            int team1 = rand.nextInt(m_currTeamsCount);
+            while (selected[team1] || (nonSelected > firstTiers && m_teams[team1].getLeague().getTier() == 1)) {
+                team1 = rand.nextInt(m_currTeamsCount);
+            }
+
+            int team2 = rand.nextInt(m_currTeamsCount);
+            while (selected[team2] || (nonSelected > firstTiers && m_teams[team2].getLeague().getTier() == 1)) {
+                team2 = rand.nextInt(m_currTeamsCount);
+            }
+
+            m_matches[matchCounter] = new CupMatch(m_teams[team1], m_teams[team2], m_competition.getCountry());
+            m_currMatchCount++;
+            nonSelected--;
+
+            selected[team1] = true;
+            selected[team2] = true;
+
+            matchCounter++;
+        }
+
+        while (matchCounter < m_currTeamsCount) {
+            int team1 = rand.nextInt(m_currTeamsCount);
+            while (selected[team1])
+                team1 = rand.nextInt(m_currTeamsCount);
+
+            int team2 = rand.nextInt(m_currTeamsCount);
+            while (selected[team2])
+                team2 = rand.nextInt(m_currTeamsCount);
+
+            m_matches[matchCounter] = new CupMatch(m_teams[team1], m_teams[team2], m_competition.getCountry());
+            selected[team1] = true;
+            selected[team2] = true;
+
+            matchCounter++;
+        }
+
+        return true;
+    }
+
+    private int getLowerPowerOf2(int size) {
+        int power = 1;
+
+        while (power < size) {
+            power *= 2;
+        }
+
+        if (power != size)
+            return power / 2;
+        else
+            return 0;
+    }
+
+    private int numFirstTiers() {
+        if (!(m_competition instanceof Cup)) {
+            System.err.println("model.Season Error: can't check num of first tiers for non-Cup");
+            return -1;
+        }
+
+        int count = 0;
+
+        for (int x = 0; x < m_currTeamsCount; x++) {
+            if (m_teams[x].getLeague().getTier() == 1) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public boolean isValid() {
+        if (m_competition == null) {
+            System.err.println("model.Season Error: competition cannot be null");
+            return false;
+        }
+
+        if (m_year < 2000) {
+            System.err.println("model.Season Error: year must be 2000 or after");
+            return false;
+        }
+
+        if (m_teams == null) {
+            System.err.println("model.Season Error: team cannot be null");
+            return false;
+        }
+
+        if (m_currTeamsCount < 0) {
+            System.err.println("model.Season Error: team count cannot be negative");
+            return false;
+        }
+
+        if (m_maxTeamsCount <= 0) {
+            System.err.println("model.Season Error: max team count must be positive");
+            return false;
+        }
+
+        if (m_matches == null) {
+            System.err.println("model.Season Error: matches cannot be null");
+            return false;
+        }
+
+        if (m_currMatchCount < 0) {
+            System.err.println("model.Season Error: match count cannot be negative");
+            return false;
+        }
+
+        if (m_maxMatchCount <= 0) {
+            System.err.println("model.Season Error: max match count should be positive");
+            return false;
+        }
+
+        return true;
+    }
+}

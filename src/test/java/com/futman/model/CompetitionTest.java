@@ -1,0 +1,114 @@
+package com.futman.model;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class CompetitionTest {
+	static Country country = new Country("United States", "USA");
+	static Competition comp1;
+	static Competition comp2;
+	static Competition comp3;
+	static Competition comp4;
+	static Team team1;
+	static Team team2;
+
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+		comp1 = new Cup("cup1", country, 64);
+		comp2 = new League("league1", country, 1, 20);
+		comp3 = new Cup("cup2", country, 32);
+		comp4 = new League("league2", country, 1, 18);
+		team1 = new Team("test1", "TE", country);
+		team2 = new Team("test2", "TE2", country);
+	}
+
+	@AfterAll
+	static void tearDownAfterClass() throws Exception {
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
+	}
+
+	@Test
+	void test_getName() {
+		assert comp1.getName().equals("cup1");
+		assert comp2.getName().equals("league1");
+		assert comp3.getName().equals("cup2");
+		assert comp4.getName().equals("league2");
+	}
+
+	@Test
+	void test_getYear() {
+		assert comp1.getYear() == Competition.getStartingYear();
+		assert comp1.nextYear();
+		assert comp1.getYear() == Competition.getStartingYear() + 1;
+	}
+
+	@Test
+	void test_getCountry() {
+		assert comp1.getCountry().equals(country);
+		assert comp2.getCountry().equals(country);
+		assert comp3.getCountry().equals(country);
+		assert comp4.getCountry().equals(country);
+	}
+
+	@Test
+	void test_equals() {
+		Competition newComp = comp1;
+		assert newComp.equals(comp1);
+		assert comp1.equals(newComp);
+		assert !comp1.equals(comp2);
+		assert !comp1.equals(comp3);
+		assert !comp1.equals(comp4);
+	}
+
+	@Test
+	void test_toString() {
+		assert comp1.toString().equals("cup1 (United States)");
+	}
+
+	@Test
+	void test_maxMatches() {
+		assert comp1.getMaxMatchesPerSeason() == 64;
+		assert comp2.getMaxMatchesPerSeason() == 380;
+		assert comp3.getMaxMatchesPerSeason() == 32;
+		assert comp4.getMaxMatchesPerSeason() == 306;
+	}
+
+	@Test
+	void test_teams() {
+		assert comp1.getTeamCount() == 0;
+
+		assert comp1.addTeams(new Team[] { team1, team2 });
+		assert comp1.findTeam(team1) == 0;
+		assert comp1.findTeam(team2) == 1;
+		assert comp1.getTeamCount() == 2;
+
+		assert comp1.removeTeam(team1);
+		assert comp1.getTeamCount() == 1;
+		assert comp1.findTeam(team1) == -1;
+		assert comp1.findTeam(team2) == 0;
+	}
+
+	@Test
+	void test_isValid() {
+		assert comp1.isValid();
+		assert comp2.isValid();
+		assert comp3.isValid();
+		assert comp4.isValid();
+
+		Competition comp5 = new League("", country, 1);
+		assert !(comp5.isValid());
+
+		Competition comp6 = new League("test league", null, 1);
+		assert !(comp6.isValid());
+	}
+}

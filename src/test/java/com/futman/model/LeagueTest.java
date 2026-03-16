@@ -1,0 +1,67 @@
+package com.futman.model;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class LeagueTest {
+	static Country country = new Country("United States", "USA");
+	static League league1;
+	static League league2;
+	static League league3;
+
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+		league1 = new League("test", country, 1, 20);
+		league2 = new League("test", country, 1, 18);
+		league3 = new League("test", country, 1, 20, 1);
+	}
+
+	@AfterAll
+	static void tearDownAfterClass() throws Exception {
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
+	}
+
+	@Test
+	void test_calculateMaxMatches() {
+		assert league1.getMaxMatchesPerSeason() == 380;
+		assert league2.getMaxMatchesPerSeason() == 306;
+		assert league3.getMaxMatchesPerSeason() == 190;
+	}
+
+	@Test
+	void test_getFaceTimesPublic() {
+		assert league1.getFaceTimesPublic() == 2;
+		assert league2.getFaceTimesPublic() == 2;
+		assert league3.getFaceTimesPublic() == 1;
+	}
+
+	@Test
+	void test_getTier() {
+		assert league1.getTier() == 1;
+		assert league2.getTier() == 1;
+		assert league3.getTier() == 1;
+	}
+
+	@Test
+	void test_isValid() {
+		assert league1.isValid();
+		assert league2.isValid();
+		assert league3.isValid();
+
+		League league4 = new League("invalid league", country, -1, 20, 1);
+		assert !(league4.isValid());
+
+		League league5 = new League("invalid league 2", country, 1, 20, -1);
+		assert !(league5.isValid());
+	}
+}

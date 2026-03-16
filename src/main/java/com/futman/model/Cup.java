@@ -1,0 +1,55 @@
+package com.futman.model;
+
+public class Cup extends Competition {
+	private int m_elimTimes;
+	private boolean m_includeThirdPlace;
+
+	public Cup(Country country) {
+		this("", country);
+	}
+
+	public Cup(String name, Country country) {
+		this(name, country, DEFAULT_MAX_TEAMS);
+	}
+
+	public Cup(String name, Country country, int maxTeams) {
+		this(name, country, maxTeams, 1, true);
+	}
+
+	public Cup(String name, Country country, int maxTeams, int elimTimes, boolean includeThirdPlace) {
+		super(name, country, maxTeams);
+
+		m_elimTimes = elimTimes;
+		m_includeThirdPlace = includeThirdPlace;
+		
+		calculateMaxMatches();
+	}
+
+	@Override
+	protected boolean calculateMaxMatches() {
+		if (!m_includeThirdPlace) {
+			if (!this.setMaxMatches(MAX_SIZE * m_elimTimes - 1))
+				return false;
+		}
+
+		else {
+			if (!this.setMaxMatches(MAX_SIZE * m_elimTimes))
+				return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	protected int getFaceTimes() {
+		return 0;
+	}
+
+	public boolean isValid() {
+		if (!(super.isValid())) {
+			return false;
+		}
+
+		return m_elimTimes > 0;
+	}
+}
